@@ -1,0 +1,185 @@
+D:\C\TEST program\20091201-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\C\TEST program\20091201-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\C\TEST program\20091201-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\C\TEST program\20091201-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\C\TEST program\20091201-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\C\TEST program\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\C\TEST program\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\C\TEST program\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\C\TEST program\20091201-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\C\TEST program\20091201-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\Program Files\20091201-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\Program Files\20091201-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\Program Files\20091201-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\Program Files\20091201-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\Program Files\20091201-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\Program Files\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\Program Files\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\Program Files\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\Program Files\20091201-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\Program Files\20091201-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\obj\Debug\SDU tester.exe
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\obj\Debug\SDU tester.pdb
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\obj\Debug\ResolveAssemblyReference.cache
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\obj\Debug\SerialPorts.Alarm.resources
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\obj\Debug\SerialPorts.Confirm.resources
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\obj\Debug\SerialPorts.Settings.resources
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\obj\Debug\SerialTerminal.Terminal.resources
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\bin\Debug\SDU tester.exe
+D:\0_NDA_IT-N Common\20110504-AFTester_AlexHsieh\bin\Debug\SDU tester.pdb
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\obj\Debug\SDU tester.exe
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\obj\Debug\SDU tester.pdb
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\bin\Debug\SDU tester.exe
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\bin\Debug\SDU tester.pdb
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\obj\Debug\ResolveAssemblyReference.cache
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\obj\Debug\SerialPorts.Alarm.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\obj\Debug\SerialPorts.Confirm.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\obj\Debug\SerialPorts.Settings.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\obj\Debug\SerialTerminal.Terminal.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110915-AFTester_AndyFeng\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\obj\Debug\SDU tester.exe
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\obj\Debug\SDU tester.pdb
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\bin\Debug\SDU tester.exe
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\bin\Debug\SDU tester.pdb
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\obj\Debug\ResolveAssemblyReference.cache
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\obj\Debug\SerialPorts.Alarm.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\obj\Debug\SerialPorts.Confirm.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\obj\Debug\SerialPorts.Settings.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\obj\Debug\SerialTerminal.Terminal.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20110919-AFTester_AndyFeng\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SDU tester.exe
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SDU tester.pdb
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\ResolveAssemblyReference.cache
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Alarm.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Confirm.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Settings.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SerialTerminal.Terminal.resources
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\bin\Debug\SDU tester.exe
+D:\0_NDA_IT-N Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\bin\Debug\SDU tester.pdb
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SDU tester.exe
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SDU tester.pdb
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\ResolveAssemblyReference.cache
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Alarm.resources
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Confirm.resources
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Settings.resources
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\SerialTerminal.Terminal.resources
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\bin\Debug\SDU tester.exe
+D:\0_NDA_Xarina Common\RD - module\AFTeset\20120815-AFTester_AndyFeng\bin\Debug\SDU tester.pdb
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\obj\Debug\SDU tester.exe
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\obj\Debug\SDU tester.pdb
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\bin\Debug\SDU tester.exe
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\bin\Debug\SDU tester.pdb
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\obj\Debug\ResolveAssemblyReference.cache
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Alarm.resources
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Confirm.resources
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\obj\Debug\SerialPorts.Settings.resources
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\obj\Debug\SerialTerminal.Terminal.resources
+D:\20120815-AFTester_AndyFeng\20120815-AFTester_AndyFeng\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\02_program\20121121-AFTester_Wythe\obj\Debug\SDU tester.exe
+D:\02_program\20121121-AFTester_Wythe\obj\Debug\SDU tester.pdb
+D:\02_program\20121123-AFTester_Wythe\obj\Debug\SDU tester.exe
+D:\02_program\20121123-AFTester_Wythe\obj\Debug\SDU tester.pdb
+D:\02_program\20121123-AFTester_Wythe\bin\Debug\SDU tester.exe
+D:\02_program\20121123-AFTester_Wythe\obj\Debug\ResolveAssemblyReference.cache
+D:\02_program\20121123-AFTester_Wythe\obj\Debug\SerialPorts.Alarm.resources
+D:\02_program\20121123-AFTester_Wythe\obj\Debug\SerialPorts.Confirm.resources
+D:\02_program\20121123-AFTester_Wythe\obj\Debug\SerialPorts.Settings.resources
+D:\02_program\20121123-AFTester_Wythe\obj\Debug\SerialTerminal.Terminal.resources
+D:\02_program\20121123-AFTester_Wythe\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\02_program\20121123-AFTester_Wythe\bin\Debug\SDU tester.pdb
+D:\02_program\20121123-AFTester_Wythe_VinVout\obj\Debug\SDU tester.exe
+D:\02_program\20121123-AFTester_Wythe_VinVout\obj\Debug\SDU tester.pdb
+D:\02_program\20121123-AFTester_Wythe_VinVout\bin\Debug\SDU tester.exe
+D:\02_program\20121123-AFTester_Wythe_VinVout\bin\Debug\SDU tester.pdb
+D:\02_program\20121123-AFTester_Wythe_VinVout\obj\Debug\ResolveAssemblyReference.cache
+D:\02_program\20121123-AFTester_Wythe_VinVout\obj\Debug\SerialPorts.Alarm.resources
+D:\02_program\20121123-AFTester_Wythe_VinVout\obj\Debug\SerialPorts.Confirm.resources
+D:\02_program\20121123-AFTester_Wythe_VinVout\obj\Debug\SerialPorts.Settings.resources
+D:\02_program\20121123-AFTester_Wythe_VinVout\obj\Debug\SerialTerminal.Terminal.resources
+D:\02_program\20121123-AFTester_Wythe_VinVout\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\obj\Debug\SDU tester.exe
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\obj\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\bin\Debug\SDU tester.exe
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\bin\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\obj\Debug\ResolveAssemblyReference.cache
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\obj\Debug\SerialPorts.Alarm.resources
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\obj\Debug\SerialPorts.Confirm.resources
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\obj\Debug\SerialPorts.Settings.resources
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\obj\Debug\SerialTerminal.Terminal.resources
+D:\02_program\02_AFTester\20121123-AFTester_Wythe_VinVout\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\SDU tester.exe
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\bin\Debug\SDU tester.exe
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\bin\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\ResolveAssemblyReference.cache
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\SerialPorts.Alarm.resources
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\SerialPorts.Confirm.resources
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\SerialPorts.Settings.resources
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\SerialTerminal.Terminal.resources
+D:\02_program\02_AFTester\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\02_program\02_AFTester\Xarina\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\SDU tester.exe
+D:\02_program\02_AFTester\Xarina\20121126-AFTester_Wythe_GetSetVinVout\obj\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\obj\Debug\SDU tester.exe
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\obj\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\bin\Debug\SDU tester.exe
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\bin\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\obj\Debug\ResolveAssemblyReference.cache
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\obj\Debug\SerialPorts.Alarm.resources
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\obj\Debug\SerialPorts.Confirm.resources
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\obj\Debug\SerialPorts.Settings.resources
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\obj\Debug\SerialTerminal.Terminal.resources
+D:\02_program\02_AFTester\Xarina\20130116-AFTester_Wythe_GetDSPVersion\obj\Debug\AFTester.csproj.GenerateResource.Cache
+d:\AFTester\obj\Debug\SDU tester.exe
+d:\AFTester\obj\Debug\SDU tester.pdb
+d:\AFTester\bin\Debug\SDU tester.exe
+d:\AFTester\bin\Debug\SDU tester.pdb
+d:\AFTester\obj\Debug\ResolveAssemblyReference.cache
+d:\AFTester\obj\Debug\SerialPorts.Alarm.resources
+d:\AFTester\obj\Debug\SerialPorts.Confirm.resources
+d:\AFTester\obj\Debug\SerialPorts.Settings.resources
+d:\AFTester\obj\Debug\SerialTerminal.Terminal.resources
+d:\AFTester\obj\Debug\AFTester.csproj.GenerateResource.Cache
+d:\temp\AFTester_Xarina\obj\Debug\SDU tester.exe
+d:\temp\AFTester_Xarina\obj\Debug\SDU tester.pdb
+d:\temp\AFTester_Xarina\bin\Debug\SDU tester.exe
+d:\temp\AFTester_Xarina\bin\Debug\SDU tester.pdb
+d:\temp\AFTester_Xarina\obj\Debug\ResolveAssemblyReference.cache
+d:\temp\AFTester_Xarina\obj\Debug\SerialPorts.Alarm.resources
+d:\temp\AFTester_Xarina\obj\Debug\SerialPorts.Confirm.resources
+d:\temp\AFTester_Xarina\obj\Debug\SerialPorts.Settings.resources
+d:\temp\AFTester_Xarina\obj\Debug\SerialTerminal.Terminal.resources
+d:\temp\AFTester_Xarina\obj\Debug\AFTester.csproj.GenerateResource.Cache
+d:\AFTester_Xarina\obj\Debug\SDU tester.exe
+d:\AFTester_Xarina\obj\Debug\SDU tester.pdb
+d:\AFTester_Xarina\obj\Debug\ResolveAssemblyReference.cache
+d:\AFTester_Xarina\obj\Debug\SerialPorts.Alarm.resources
+d:\AFTester_Xarina\obj\Debug\SerialPorts.Confirm.resources
+d:\AFTester_Xarina\obj\Debug\SerialPorts.Settings.resources
+d:\AFTester_Xarina\obj\Debug\SerialTerminal.Terminal.resources
+d:\AFTester_Xarina\obj\Debug\AFTester.csproj.GenerateResource.Cache
+d:\AFTester_Xarina\bin\Debug\SDU tester.exe
+d:\AFTester_Xarina\bin\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SDU tester.exe
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\bin\Debug\SDU tester.exe
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\bin\Debug\SDU tester.pdb
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\ResolveAssemblyReference.cache
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Alarm.resources
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Confirm.resources
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Settings.resources
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialTerminal.Terminal.resources
+D:\02_program\02_AFTester\Xarina\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\AFTester.csproj.GenerateResource.Cache
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\bin\Debug\SDU tester.exe
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\bin\Debug\SDU tester.pdb
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\AFTester.csprojAssemblyReference.cache
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Alarm.resources
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Confirm.resources
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Settings.resources
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialTerminal.Terminal.resources
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\AFTester.csproj.GenerateResource.cache
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\AFTester.csproj.CoreCompileInputs.cache
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SDU tester.exe
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SDU tester.pdb

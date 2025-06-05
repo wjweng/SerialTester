@@ -1,0 +1,31 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPorts", "SerialPorts.csproj", "{3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialTerm", "Terminal\SerialTerm.csproj", "{9DAEA859-7422-4BA0-8332-C2714975229D}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{9DAEA859-7422-4BA0-8332-C2714975229D}.0 = {3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}
+		{9DAEA859-7422-4BA0-8332-C2714975229D}.1 = {3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}
+		{9DAEA859-7422-4BA0-8332-C2714975229D}.2 = {3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}
+		{9DAEA859-7422-4BA0-8332-C2714975229D}.3 = {3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}.Debug.ActiveCfg = Debug|.NET
+		{3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}.Debug.Build.0 = Debug|.NET
+		{3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}.Release.ActiveCfg = Release|.NET
+		{3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}.Release.Build.0 = Release|.NET
+		{9DAEA859-7422-4BA0-8332-C2714975229D}.Debug.ActiveCfg = Debug|.NET
+		{9DAEA859-7422-4BA0-8332-C2714975229D}.Debug.Build.0 = Debug|.NET
+		{9DAEA859-7422-4BA0-8332-C2714975229D}.Release.ActiveCfg = Release|.NET
+		{9DAEA859-7422-4BA0-8332-C2714975229D}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

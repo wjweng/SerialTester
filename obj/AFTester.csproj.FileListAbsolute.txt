@@ -1,0 +1,102 @@
+W:\David\AFTester_DH510\obj\Debug\SDU tester.exe
+W:\David\AFTester_DH510\obj\Debug\SDU tester.pdb
+D:\AFTester_DH510\obj\Debug\SDU tester.exe
+D:\AFTester_DH510\obj\Debug\SDU tester.pdb
+D:\AFTester_DH510\bin\Debug\SDU tester.exe
+D:\AFTester_DH510\bin\Debug\SDU tester.pdb
+D:\AFTester_DH510\obj\Debug\ResolveAssemblyReference.cache
+D:\AFTester_DH510\obj\Debug\SerialPorts.Alarm.resources
+D:\AFTester_DH510\obj\Debug\SerialPorts.Confirm.resources
+D:\AFTester_DH510\obj\Debug\SerialPorts.Settings.resources
+D:\AFTester_DH510\obj\Debug\SerialTerminal.Terminal.resources
+D:\AFTester_DH510\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\D78M0\AFTester_Fran\20090804-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\D78M0\AFTester_Fran\20090812-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\20090812-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\20090812-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\20090812-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\20090812-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\20090812-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\20090812-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\20090812-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\20090812-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\20090812-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\20090812-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\20090917-AFTester_DH510_David\obj\Debug\SDU tester.exe
+D:\20090917-AFTester_DH510_David\obj\Debug\SDU tester.pdb
+D:\20090917-AFTester_DH510_David\bin\Debug\SDU tester.exe
+D:\20090917-AFTester_DH510_David\bin\Debug\SDU tester.pdb
+D:\20090917-AFTester_DH510_David\obj\Debug\ResolveAssemblyReference.cache
+D:\20090917-AFTester_DH510_David\obj\Debug\SerialPorts.Alarm.resources
+D:\20090917-AFTester_DH510_David\obj\Debug\SerialPorts.Confirm.resources
+D:\20090917-AFTester_DH510_David\obj\Debug\SerialPorts.Settings.resources
+D:\20090917-AFTester_DH510_David\obj\Debug\SerialTerminal.Terminal.resources
+D:\20090917-AFTester_DH510_David\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\obj\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\obj\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\bin\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\bin\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\obj\Debug\ResolveAssemblyReference.cache
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\obj\Debug\SerialPorts.Alarm.resources
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\obj\Debug\SerialPorts.Confirm.resources
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\obj\Debug\SerialPorts.Settings.resources
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\obj\Debug\SerialTerminal.Terminal.resources
+D:\D78M0\AFTester_Fran\20090921-AFTester_DH510_David\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\D78M0\AFTester_Fran\20090922-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\D78M0\AFTester_Fran\20091105-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\D78M0\AFTester_Fran\20091120-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\obj\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\obj\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\bin\Debug\SDU tester.exe
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\bin\Debug\SDU tester.pdb
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\obj\Debug\ResolveAssemblyReference.cache
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Alarm.resources
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Confirm.resources
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\obj\Debug\SerialPorts.Settings.resources
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\obj\Debug\SerialTerminal.Terminal.resources
+D:\D78M0\AFTester_Fran\20091201-AFTester_DH510_henry\obj\Debug\AFTester.csproj.GenerateResource.Cache

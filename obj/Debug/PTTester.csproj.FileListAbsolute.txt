@@ -1,0 +1,48 @@
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\bin\Debug\SDU tester.exe
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\bin\Debug\SDU tester.pdb
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\PTTester.csprojAssemblyReference.cache
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Alarm.resources
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Confirm.resources
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Settings.resources
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialTerminal.Terminal.resources
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\PTTester.csproj.GenerateResource.cache
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\PTTester.csproj.CoreCompileInputs.cache
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SDU tester.exe
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SDU tester.pdb
+C:\Users\wythe.weng.VIVOTEK\Desktop\20140312_01 xarina_zoom_bias_AlexHsieh\AFTester_Xarina\obj\Debug\SerialPorts.Properties.Resources.resources
+D:\01_code\code\PTTester\PTTester\bin\Debug\SDU tester.exe
+D:\01_code\code\PTTester\PTTester\bin\Debug\SDU tester.pdb
+D:\01_code\code\PTTester\PTTester\obj\Debug\PTTester.csprojAssemblyReference.cache
+D:\01_code\code\PTTester\PTTester\obj\Debug\SerialPorts.Alarm.resources
+D:\01_code\code\PTTester\PTTester\obj\Debug\SerialPorts.Confirm.resources
+D:\01_code\code\PTTester\PTTester\obj\Debug\SerialPorts.Properties.Resources.resources
+D:\01_code\code\PTTester\PTTester\obj\Debug\SerialPorts.Settings.resources
+D:\01_code\code\PTTester\PTTester\obj\Debug\SerialTerminal.Terminal.resources
+D:\01_code\code\PTTester\PTTester\obj\Debug\PTTester.csproj.GenerateResource.cache
+D:\01_code\code\PTTester\PTTester\obj\Debug\PTTester.csproj.CoreCompileInputs.cache
+D:\01_code\code\PTTester\PTTester\obj\Debug\SDU tester.exe
+D:\01_code\code\PTTester\PTTester\obj\Debug\SDU tester.pdb
+D:\01_working\01_code\code\PTTester\PTTester\bin\Debug\SDU tester.exe
+D:\01_working\01_code\code\PTTester\PTTester\bin\Debug\SDU tester.pdb
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\PTTester.csprojAssemblyReference.cache
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\SerialPorts.Alarm.resources
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\SerialPorts.Confirm.resources
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\SerialPorts.Properties.Resources.resources
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\SerialPorts.Settings.resources
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\SerialTerminal.Terminal.resources
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\PTTester.csproj.GenerateResource.cache
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\PTTester.csproj.CoreCompileInputs.cache
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\SDU tester.exe
+D:\01_working\01_code\code\PTTester\PTTester\obj\Debug\SDU tester.pdb
+D:\01_working\01_code\working\PTTester\PTTester\bin\Debug\SDU tester.exe
+D:\01_working\01_code\working\PTTester\PTTester\bin\Debug\SDU tester.pdb
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\PTTester.csprojAssemblyReference.cache
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\SerialPorts.Alarm.resources
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\SerialPorts.Confirm.resources
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\SerialPorts.Properties.Resources.resources
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\SerialPorts.Settings.resources
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\SerialTerminal.Terminal.resources
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\PTTester.csproj.GenerateResource.cache
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\PTTester.csproj.CoreCompileInputs.cache
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\SDU tester.exe
+D:\01_working\01_code\working\PTTester\PTTester\obj\Debug\SDU tester.pdb

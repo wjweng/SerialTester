@@ -1,0 +1,10 @@
+bin\Debug\SDU tester.exe
+bin\Debug\SDU tester.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\SerialPorts.Alarm.resources
+obj\Debug\SerialPorts.Confirm.resources
+obj\Debug\SerialPorts.Settings.resources
+obj\Debug\SerialTerminal.Terminal.resources
+obj\Debug\AFTester.csproj.GenerateResource.Cache
+obj\Debug\SDU tester.exe
+obj\Debug\SDU tester.pdb

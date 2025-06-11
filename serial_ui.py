@@ -49,9 +49,8 @@ class Ui_SerialWidget(object):
         self.tabMainUi.setupUi(self.tabMain)
         # expose widgets from main tab for external access
         for name in [
-            'spinTarget', 'spinDome', 'spinFunction',
-            'comboAlarmNumber', 'comboAlarmType',
-            'btnSetDefault', 'btnSetMove', 'btnClearMove',
+            'btnTiltUp', 'btnTiltDown', 'btnPanLeft', 'btnPanRight',
+            'btnPanStop', 'btnStopAt', 'checkMoveStop', 'editStopAt',
             'btnRelUp', 'btnRelDown', 'btnRelLeft', 'btnRelRight', 'btnRelStop',
             'editRelStep', 'btnABS', 'btnABS2', 'btnABSAngle',
             'editABSPos', 'editABS2Pos', 'editABSAngle', 'btnHome',

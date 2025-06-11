@@ -14,78 +14,59 @@
          <string>Continuous Move</string>
         </property>
         <layout class="QGridLayout" name="gridMove">
-         <item row="0" column="0">
-          <widget class="QLabel" name="labelTarget">
-           <property name="text">
-            <string>Target Number</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="spinTarget"/>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="labelDome">
+          <widget class="QPushButton" name="btnTiltUp">
            <property name="text">
-            <string>Dome ID</string>
+            <string>Up</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
-          <widget class="QSpinBox" name="spinDome"/>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLabel" name="labelFunction">
+         <item row="2" column="1">
+          <widget class="QPushButton" name="btnTiltDown">
            <property name="text">
-            <string>Function Number</string>
+            <string>Down</string>
            </property>
           </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QSpinBox" name="spinFunction"/>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="labelAlarmNumber">
+          <widget class="QPushButton" name="btnPanLeft">
            <property name="text">
-            <string>Alarm Number</string>
+            <string>Left</string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QComboBox" name="comboAlarmNumber"/>
+          <widget class="QPushButton" name="btnPanStop">
+           <property name="text">
+            <string>Stop</string>
+           </property>
+          </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QLabel" name="labelAlarmType">
+          <widget class="QPushButton" name="btnPanRight">
            <property name="text">
-            <string>AlarmType</string>
+            <string>Right</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="3">
-          <widget class="QComboBox" name="comboAlarmType"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QPushButton" name="btnSetDefault">
+         <item row="0" column="3" colspan="2">
+          <widget class="QCheckBox" name="checkMoveStop">
            <property name="text">
-            <string>Set Default</string>
+            <string>Move+Stop</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
-          <widget class="QPushButton" name="btnSetMove">
+         <item row="1" column="4">
+          <widget class="QPushButton" name="btnStopAt">
            <property name="text">
-            <string>Set</string>
+            <string>Stop At</string>
            </property>
           </widget>
          </item>
          <item row="2" column="4">
-          <widget class="QPushButton" name="btnClearMove">
-           <property name="text">
-            <string>Clear</string>
-           </property>
-          </widget>
+          <widget class="QLineEdit" name="editStopAt"/>
          </item>
-        </layout>
+       </layout>
        </widget>
       </item>
       <item>

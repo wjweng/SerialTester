@@ -10,6 +10,7 @@ import binascii
 
 VERSION_CMD = bytes([0x81, 0x09, 0x00, 0x02, 0xFF])
 CONFIG_FILE = "serial_config.json"
+DEFAULT_SPEED_LEVEL = 100
 
 
 def list_serial_ports():
@@ -85,27 +86,35 @@ class SerialWindow(QtWidgets.QWidget):
         self.ui.btnTest6.clicked.connect(lambda: self.handle_test(6))
         self.ui.btnTest7.clicked.connect(lambda: self.handle_test(7))
         self.ui.btnTest8.clicked.connect(lambda: self.handle_test(8))
-        self.ui.btnSetMove.clicked.connect(self.set_move)
-        self.ui.btnClearMove.clicked.connect(self.clear_move)
-        self.ui.btnSetDefault.clicked.connect(self.set_default_move)
         self.ui.btnShowSpeed.clicked.connect(self.start_speed_timer)
         self.ui.btnStopSpeed.clicked.connect(self.stop_speed_timer)
+        self.ui.btnTiltUp.clicked.connect(self.tilt_up_clicked)
+        self.ui.btnTiltUp.pressed.connect(self.tilt_up_pressed)
+        self.ui.btnTiltUp.released.connect(self.tilt_released)
+        self.ui.btnTiltDown.clicked.connect(self.tilt_down_clicked)
+        self.ui.btnTiltDown.pressed.connect(self.tilt_down_pressed)
+        self.ui.btnTiltDown.released.connect(self.tilt_released)
+        self.ui.btnPanLeft.clicked.connect(self.pan_left_clicked)
+        self.ui.btnPanLeft.pressed.connect(self.pan_left_pressed)
+        self.ui.btnPanLeft.released.connect(self.pan_released)
+        self.ui.btnPanRight.clicked.connect(self.pan_right_clicked)
+        self.ui.btnPanRight.pressed.connect(self.pan_right_pressed)
+        self.ui.btnPanRight.released.connect(self.pan_released)
+        self.ui.btnPanStop.clicked.connect(self.send_stop_command)
+        self.ui.btnStopAt.clicked.connect(self.stop_at)
+        self.ui.btnABS.clicked.connect(self.abs_move)
+        self.ui.btnABS2.clicked.connect(self.abs_move2)
+        self.ui.btnABSAngle.clicked.connect(self.abs_angle)
+        self.ui.btnABSAngle2.clicked.connect(self.abs_angle2)
+        self.ui.btnABSStop.clicked.connect(self.abs_stop)
+        self.ui.btnABSAngleStop.clicked.connect(self.abs_angle_stop)
+        self.ui.btnPanType.clicked.connect(self.get_pan_type)
+        self.ui.comboPanMethod.currentIndexChanged.connect(self.set_pan_method)
+        self.ui.btnHome.clicked.connect(self.go_home)
 
         self.speed_timer = QtCore.QTimer(self)
         self.speed_timer.timeout.connect(self.send_speed_query)
 
-        # populate combo boxes with basic items
-        self.ui.comboAlarmNumber.addItems(["000:Preset", "255:None"])
-        self.ui.comboAlarmType.addItems([
-            "000:Success Start", "001:Success Termination", "002:End",
-            "003:Release", "004:Inspection", "005:Open Store",
-            "006:Shut Store", "007:Call For Clerk", "008:Break Wire",
-            "009:Abnormal Over-Output", "010:Abnormal Supply",
-            "011:Abnormal Recovery", "012:Abnormal Base",
-            "013:Abnormal Prize", "014:Abnormal Open-Door",
-            "015:Glass Open", "016:Abnormal Communication/Station",
-            "021:Abnormal Radio Wave", "022:Abnormal Magnet",
-        ])
 
     def refresh_ports(self):
         ports = list_serial_ports()
@@ -150,23 +159,6 @@ class SerialWindow(QtWidgets.QWidget):
         if cmd:
             self.send_command(cmd)
 
-    def set_move(self):
-        target = self.ui.spinTarget.value()
-        dome = self.ui.spinDome.value()
-        func = self.ui.spinFunction.value()
-        # placeholder command using values
-        cmd = bytes([0x81, 0x09, target & 0xFF, func & 0xFF, 0xFF])
-        self.send_command(cmd)
-
-    def clear_move(self):
-        self.ui.spinTarget.setValue(0)
-        self.ui.spinDome.setValue(0)
-        self.ui.spinFunction.setValue(0)
-
-    def set_default_move(self):
-        self.ui.spinTarget.setValue(0)
-        self.ui.spinDome.setValue(1)
-        self.ui.spinFunction.setValue(0)
 
     def start_speed_timer(self):
         self.speed_timer.start(500)
@@ -176,6 +168,134 @@ class SerialWindow(QtWidgets.QWidget):
 
     def send_speed_query(self):
         cmd = bytes([0x81, 0xD9, 0x06, 0x03, 0xFF])
+        self.send_command(cmd)
+
+    def get_speed_level(self) -> int:
+        return DEFAULT_SPEED_LEVEL
+
+    def send_stop_command(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x03, 0xFF])
+        self.send_command(cmd)
+
+    def tilt_up_clicked(self):
+        if self.ui.checkMoveStop.isChecked():
+            return
+        self.tilt_up_pressed()
+
+    def tilt_up_pressed(self):
+        if not self.ui.checkMoveStop.isChecked():
+            return
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x01, 0xFF])
+        cmd[5] = level
+        self.send_command(bytes(cmd))
+
+    def tilt_down_clicked(self):
+        if self.ui.checkMoveStop.isChecked():
+            return
+        self.tilt_down_pressed()
+
+    def tilt_down_pressed(self):
+        if not self.ui.checkMoveStop.isChecked():
+            return
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x02, 0xFF])
+        cmd[5] = level
+        self.send_command(bytes(cmd))
+
+    def tilt_released(self):
+        if self.ui.checkMoveStop.isChecked():
+            self.send_stop_command()
+
+    def pan_left_clicked(self):
+        if self.ui.checkMoveStop.isChecked():
+            return
+        self.pan_left_pressed()
+
+    def pan_left_pressed(self):
+        if not self.ui.checkMoveStop.isChecked():
+            return
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x01, 0x03, 0xFF])
+        cmd[4] = level
+        self.send_command(bytes(cmd))
+
+    def pan_right_clicked(self):
+        if self.ui.checkMoveStop.isChecked():
+            return
+        self.pan_right_pressed()
+
+    def pan_right_pressed(self):
+        if not self.ui.checkMoveStop.isChecked():
+            return
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x02, 0x03, 0xFF])
+        cmd[4] = level
+        self.send_command(bytes(cmd))
+
+    def pan_released(self):
+        if self.ui.checkMoveStop.isChecked():
+            self.send_stop_command()
+
+    def stop_at(self):
+        text = self.ui.editStopAt.text() or "0"
+        pos = int(text)
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x03,
+                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
+        cmd[8] = (pos >> 12) & 0x0F
+        cmd[9] = (pos >> 8) & 0x0F
+        cmd[10] = (pos >> 4) & 0x0F
+        cmd[11] = pos & 0x0F
+        self.send_command(bytes(cmd))
+
+    def abs_command(self, code: int, edit: QtWidgets.QLineEdit):
+        text = edit.text() or "0"
+        pos = int(text)
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, code, 0x00, 0x00,
+                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
+        cmd[4] = level
+        cmd[6] = (pos >> 12) & 0x0F
+        cmd[7] = (pos >> 8) & 0x0F
+        cmd[8] = (pos >> 4) & 0x0F
+        cmd[9] = pos & 0x0F
+        self.send_command(bytes(cmd))
+
+    def abs_move(self):
+        self.abs_command(0x02, self.ui.editABSPos)
+
+    def abs_move2(self):
+        self.abs_command(0x02, self.ui.editABS2Pos)
+
+    def abs_angle(self):
+        self.abs_command(0x06, self.ui.editABSAngle)
+
+    def abs_angle2(self):
+        self.abs_command(0x06, self.ui.editABSAngle2)
+
+    def abs_stop(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x02, 0x00, 0x00, 0xFF])
+        self.send_command(cmd)
+
+    def abs_angle_stop(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x06, 0x00, 0x00, 0xFF])
+        self.send_command(cmd)
+
+    def get_pan_type(self):
+        cmd = bytes([0x81, 0xD9, 0x06, 0x02, 0xFF])
+        self.send_command(cmd)
+
+    def set_pan_method(self, idx: int):
+        if idx is None:
+            idx = self.ui.comboPanMethod.currentIndex()
+        if idx < 0:
+            idx = 0
+            self.ui.comboPanMethod.setCurrentIndex(0)
+        cmd = bytes([0x81, 0xD1, 0x06, 0x02, idx & 0x0F, 0xFF])
+        self.send_command(cmd)
+
+    def go_home(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x04, 0xFF])
         self.send_command(cmd)
 
     def on_rx(self, data: bytes):

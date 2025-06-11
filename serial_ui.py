@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtWidgets, QtChart
+from tab_main_ui import Ui_MainTab
 
 class Ui_SerialWidget(object):
     def setupUi(self, SerialWidget):
@@ -44,83 +45,17 @@ class Ui_SerialWidget(object):
 
         self.tabMain = QtWidgets.QWidget()
         self.tabMain.setObjectName("tabMain")
-        self.horizontalMain = QtWidgets.QHBoxLayout(self.tabMain)
-        self.horizontalMain.setObjectName("horizontalMain")
-
-        self.groupPanTilt = QtWidgets.QGroupBox(self.tabMain)
-        self.groupPanTilt.setObjectName("groupPanTilt")
-        self.layoutPanTilt = QtWidgets.QVBoxLayout(self.groupPanTilt)
-        self.layoutPanTilt.setObjectName("layoutPanTilt")
-        self.groupMove = QtWidgets.QGroupBox(self.groupPanTilt)
-        self.groupMove.setObjectName("groupMove")
-        self.gridMove = QtWidgets.QGridLayout(self.groupMove)
-        self.gridMove.setObjectName("gridMove")
-
-        self.labelTarget = QtWidgets.QLabel(self.groupMove)
-        self.labelTarget.setObjectName("labelTarget")
-        self.gridMove.addWidget(self.labelTarget, 0, 0, 1, 1)
-        self.spinTarget = QtWidgets.QSpinBox(self.groupMove)
-        self.spinTarget.setObjectName("spinTarget")
-        self.gridMove.addWidget(self.spinTarget, 0, 1, 1, 1)
-
-        self.labelDome = QtWidgets.QLabel(self.groupMove)
-        self.labelDome.setObjectName("labelDome")
-        self.gridMove.addWidget(self.labelDome, 0, 2, 1, 1)
-        self.spinDome = QtWidgets.QSpinBox(self.groupMove)
-        self.spinDome.setObjectName("spinDome")
-        self.gridMove.addWidget(self.spinDome, 0, 3, 1, 1)
-
-        self.labelFunction = QtWidgets.QLabel(self.groupMove)
-        self.labelFunction.setObjectName("labelFunction")
-        self.gridMove.addWidget(self.labelFunction, 0, 4, 1, 1)
-        self.spinFunction = QtWidgets.QSpinBox(self.groupMove)
-        self.spinFunction.setObjectName("spinFunction")
-        self.gridMove.addWidget(self.spinFunction, 0, 5, 1, 1)
-
-        self.labelAlarmNumber = QtWidgets.QLabel(self.groupMove)
-        self.labelAlarmNumber.setObjectName("labelAlarmNumber")
-        self.gridMove.addWidget(self.labelAlarmNumber, 1, 0, 1, 1)
-        self.comboAlarmNumber = QtWidgets.QComboBox(self.groupMove)
-        self.comboAlarmNumber.setObjectName("comboAlarmNumber")
-        self.gridMove.addWidget(self.comboAlarmNumber, 1, 1, 1, 1)
-
-        self.labelAlarmType = QtWidgets.QLabel(self.groupMove)
-        self.labelAlarmType.setObjectName("labelAlarmType")
-        self.gridMove.addWidget(self.labelAlarmType, 1, 2, 1, 1)
-        self.comboAlarmType = QtWidgets.QComboBox(self.groupMove)
-        self.comboAlarmType.setObjectName("comboAlarmType")
-        self.gridMove.addWidget(self.comboAlarmType, 1, 3, 1, 1)
-
-        self.btnSetDefault = QtWidgets.QPushButton(self.groupMove)
-        self.btnSetDefault.setObjectName("btnSetDefault")
-        self.gridMove.addWidget(self.btnSetDefault, 2, 0, 1, 1)
-        self.btnSetMove = QtWidgets.QPushButton(self.groupMove)
-        self.btnSetMove.setObjectName("btnSetMove")
-        self.gridMove.addWidget(self.btnSetMove, 2, 3, 1, 1)
-        self.btnClearMove = QtWidgets.QPushButton(self.groupMove)
-        self.btnClearMove.setObjectName("btnClearMove")
-        self.gridMove.addWidget(self.btnClearMove, 2, 4, 1, 1)
-
-        self.layoutPanTilt.addWidget(self.groupMove)
-        self.groupPanTilt.setLayout(self.layoutPanTilt)
-        self.horizontalMain.addWidget(self.groupPanTilt)
-
-        self.layoutChart = QtWidgets.QVBoxLayout()
-        self.layoutChart.setObjectName("layoutChart")
-        self.chartSpeed = QtChart.QChartView(self.tabMain)
-        self.chartSpeed.setObjectName("chartSpeed")
-        self.layoutChart.addWidget(self.chartSpeed)
-        self.layoutChartButtons = QtWidgets.QHBoxLayout()
-        self.layoutChartButtons.setObjectName("layoutChartButtons")
-        self.btnShowSpeed = QtWidgets.QPushButton(self.tabMain)
-        self.btnShowSpeed.setObjectName("btnShowSpeed")
-        self.layoutChartButtons.addWidget(self.btnShowSpeed)
-        self.btnStopSpeed = QtWidgets.QPushButton(self.tabMain)
-        self.btnStopSpeed.setObjectName("btnStopSpeed")
-        self.layoutChartButtons.addWidget(self.btnStopSpeed)
-        self.layoutChart.addLayout(self.layoutChartButtons)
-        self.horizontalMain.addLayout(self.layoutChart)
-
+        self.tabMainUi = Ui_MainTab()
+        self.tabMainUi.setupUi(self.tabMain)
+        # expose widgets from main tab for external access
+        for name in [
+            'btnTiltUp', 'btnTiltDown', 'btnPanLeft', 'btnPanRight',
+            'btnPanStop', 'btnStopAt', 'checkMoveStop', 'editStopAt',
+            'btnRelUp', 'btnRelDown', 'btnRelLeft', 'btnRelRight', 'btnRelStop',
+            'editRelStep', 'btnABS', 'btnABS2', 'btnABSAngle',
+            'editABSPos', 'editABS2Pos', 'editABSAngle', 'btnHome',
+            'chartSpeed', 'btnShowSpeed', 'btnStopSpeed', 'btnClearChart']:
+            setattr(self, name, getattr(self.tabMainUi, name))
         self.tabWidget.addTab(self.tabMain, "")
 
         self.tabTest = QtWidgets.QWidget()
@@ -232,16 +167,6 @@ class Ui_SerialWidget(object):
         self.labelFwValue.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabMain), _translate("SerialWidget", "Main"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabTest), _translate("SerialWidget", "Test"))
-        self.groupPanTilt.setTitle(_translate("SerialWidget", "Pan/Tilt Control"))
-        self.groupMove.setTitle(_translate("SerialWidget", "Continuous Move"))
-        self.labelTarget.setText(_translate("SerialWidget", "Target Number"))
-        self.labelDome.setText(_translate("SerialWidget", "Dome ID"))
-        self.labelFunction.setText(_translate("SerialWidget", "Function Number"))
-        self.labelAlarmNumber.setText(_translate("SerialWidget", "Alarm Number"))
-        self.labelAlarmType.setText(_translate("SerialWidget", "AlarmType"))
-        self.btnSetDefault.setText(_translate("SerialWidget", "Set Default"))
-        self.btnSetMove.setText(_translate("SerialWidget", "Set"))
-        self.btnClearMove.setText(_translate("SerialWidget", "Clear"))
         self.btnShowSpeed.setText(_translate("SerialWidget", "Show Speed"))
         self.btnStopSpeed.setText(_translate("SerialWidget", "Stop"))
         self.groupVisca.setTitle(_translate("SerialWidget", "Test Visca Commands"))

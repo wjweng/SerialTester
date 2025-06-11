@@ -6,7 +6,7 @@ from dataclasses import dataclass, asdict
 class SerialConfig:
     """Serial port configuration settings."""
     port_name: str = 'COM1'
-    baud_rate: int = 9600
+    baud_rate: int = 38400
     bytesize: int = 8
     parity: str = 'N'
     stop_bits: float = 1

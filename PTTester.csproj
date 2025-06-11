@@ -6,10 +6,10 @@
     <ProjectGuid>{3B517BA6-FCBE-40FC-BE9C-6A0BB556ED53}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>ComPorts.ico</ApplicationIcon>
+    <ApplicationIcon>PT.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
-    <AssemblyName>SDU tester</AssemblyName>
+    <AssemblyName>PTTester</AssemblyName>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
@@ -156,6 +156,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Content Include="ComPorts.ico" />
+    <Content Include="PT.ico" />
+    <Content Include="PT_removebg.ico" />
     <EmbeddedResource Include="Alarm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Alarm.cs</DependentUpon>

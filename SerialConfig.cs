@@ -72,7 +72,7 @@ namespace SerialPorts
 		public SerialCnfg(int index, string fName)
 		{
 			this.Initialize(index);
-			this.Load(fName);
+			this.Load(fName, index);
 			return;
 		}
 		#endregion
@@ -211,8 +211,39 @@ namespace SerialPorts
 		/// <summary> 
 		/// Load the message definition list from a text file.
 		/// </summary>
-		public void Load(string fName)
+		public void Load(string fName, int index)
 		{
+			this.portName = "COM" + index.ToString() + ":";
+			this.baudRate = (LineSpeed)38400;
+			this.txFlowCTS = false;
+			this.txFlowDSR = false;
+			this.dtrControl = (PinState)0;
+			this.rxDSRsense = false;
+			this.txContinue = true;
+			this.txFlowXoff = false;
+			this.rxFlowXoff = false;
+			this.errReplace = false;
+			this.nulDiscard = false;
+			this.rtsControl = (PinState)0;
+			this.abortOnErr = false;
+			this.xonLimit = 0;
+			this.xoffLimit = 0;
+			this.dataBits = (ByteSize)8;
+			this.parity = (Parity)0;
+			this.stopBits = (StopBits)0;
+			this.xonChar = 17;
+			this.xoffChar = 19;
+			this.errChar = 63;
+			this.eofChar = 26;
+			this.evtChar = 0;
+			this.handshake = (Handshake)0;
+			this.rxQueLen = 0;
+			this.txQueLen = 0;
+			this.txTmoMulti = 0;
+			this.txTmoConst = 0;
+			this.receiveMode = false;
+
+			/*
 			// Quit if file doesn't exist.
 			FileInfo fi = new FileInfo(fName);
 			if(fi.Exists == false)
@@ -292,6 +323,8 @@ namespace SerialPorts
 
 			// FClose.
 			fs.Close();
+			*/
+
 			return;
 		}
 		#endregion

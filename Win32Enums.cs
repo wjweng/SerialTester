@@ -39,6 +39,9 @@ namespace SerialPorts
 		Baud_115200	= 115200,
 		Baud_128000	= 128000,
 		Baud_256000	= 256000,
+		Baud_921600 = 921600,
+		Baud_950000 = 950000,
+		Baud_1000000 = 1000000,
 	};
 
 	/// <summary>

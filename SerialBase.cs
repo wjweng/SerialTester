@@ -118,7 +118,7 @@ namespace SerialPorts
 			{
 				this.index = index;
 				this.SetName();
-				this.cnfg.Load(this.name);
+				this.cnfg.Load(this.name, index);
 			}
 			return this.Create(this.cnfg);
 		}

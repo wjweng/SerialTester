@@ -180,7 +180,11 @@ class SerialWindow(QtWidgets.QWidget):
     def tilt_up_clicked(self):
         if self.ui.checkMoveStop.isChecked():
             return
-        self.tilt_up_pressed()
+
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x01, 0xFF])
+        cmd[5] = level
+        self.send_command(bytes(cmd))
 
     def tilt_up_pressed(self):
         if not self.ui.checkMoveStop.isChecked():
@@ -193,7 +197,11 @@ class SerialWindow(QtWidgets.QWidget):
     def tilt_down_clicked(self):
         if self.ui.checkMoveStop.isChecked():
             return
-        self.tilt_down_pressed()
+
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x02, 0xFF])
+        cmd[5] = level
+        self.send_command(bytes(cmd))
 
     def tilt_down_pressed(self):
         if not self.ui.checkMoveStop.isChecked():
@@ -210,7 +218,11 @@ class SerialWindow(QtWidgets.QWidget):
     def pan_left_clicked(self):
         if self.ui.checkMoveStop.isChecked():
             return
-        self.pan_left_pressed()
+
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x01, 0x03, 0xFF])
+        cmd[4] = level
+        self.send_command(bytes(cmd))
 
     def pan_left_pressed(self):
         if not self.ui.checkMoveStop.isChecked():
@@ -223,7 +235,11 @@ class SerialWindow(QtWidgets.QWidget):
     def pan_right_clicked(self):
         if self.ui.checkMoveStop.isChecked():
             return
-        self.pan_right_pressed()
+
+        level = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x02, 0x03, 0xFF])
+        cmd[4] = level
+        self.send_command(bytes(cmd))
 
     def pan_right_pressed(self):
         if not self.ui.checkMoveStop.isChecked():
@@ -307,9 +323,27 @@ class SerialWindow(QtWidgets.QWidget):
             idx = data.index(0xFF)
             packet = data[:idx+1]
             if len(packet) >= 8:
-                ver = f"{2000 + packet[4]}/{packet[5]}/{packet[6]}-{packet[7]}"
+                p5 = f"0{packet[5]}" if packet[5] < 10 else str(packet[5])
+                p6 = f"0{packet[6]}" if packet[6] < 10 else str(packet[6])
+                p7 = f"0{packet[7]}" if packet[7] < 10 else str(packet[7])
+                ver = f"{2000 + packet[4]}{p5}{p6}-{p7}"
                 self.ui.labelFwValue.setText(ver)
-        self.ui.textRx.append(' '.join(f'{b:02X}' for b in data))
+
+        # Split data into packets at 0xFF and format each packet
+        packets = []
+        start = 0
+        for i, byte in enumerate(data):
+            if byte == 0xFF:
+                packet = data[start:i+1]
+                packets.append(' '.join(f'{b:02X}' for b in packet))
+                start = i+1
+        
+        # Add any remaining bytes
+        if start < len(data):
+            packets.append(' '.join(f'{b:02X}' for b in data[start:]))
+        
+        # Join packets with newlines and append to textRx
+        self.ui.textRx.append('\n'.join(packets))
 
     def clear_text(self):
         self.ui.textTx.clear()

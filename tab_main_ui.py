@@ -158,6 +158,7 @@ class Ui_MainTab(object):
         self.btnTiltDown.setText(_translate("MainTab", "Down"))
         self.checkMoveStop.setText(_translate("MainTab", "Move+Stop"))
         self.btnStopAt.setText(_translate("MainTab", "Stop At"))
+
         self.groupAbsolute.setTitle(_translate("MainTab", "Absolute Move"))
         self.btnABS.setText(_translate("MainTab", "ABS"))
         self.btnABS2.setText(_translate("MainTab", "ABS2"))
@@ -166,6 +167,7 @@ class Ui_MainTab(object):
         self.btnABSStop.setText(_translate("MainTab", "ABS Stop"))
         self.btnPanType.setText(_translate("MainTab", "Get Pan Type"))
         self.btnABSAngleStop.setText(_translate("MainTab", "ABS Angle Stop"))
+
         self.groupRelative.setTitle(_translate("MainTab", "Relative Move"))
         self.btnRelUp.setText(_translate("MainTab", "Up"))
         self.btnRelLeft.setText(_translate("MainTab", "Left"))
@@ -173,6 +175,7 @@ class Ui_MainTab(object):
         self.btnRelRight.setText(_translate("MainTab", "Right"))
         self.btnRelDown.setText(_translate("MainTab", "Down"))
         self.labelRelStep.setText(_translate("MainTab", "Step"))
+
         self.btnHome.setText(_translate("MainTab", "Home"))
         self.btnShowSpeed.setText(_translate("MainTab", "Show Speed"))
         self.btnStopSpeed.setText(_translate("MainTab", "Stop"))

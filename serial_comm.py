@@ -19,6 +19,7 @@ class SerialComm:
         self._serial: SerialPort | None = None
         self._rx_thread = None
         self._running = threading.Event()
+        self._buffer = bytearray()
 
     def open(self):
         try:
@@ -87,7 +88,10 @@ class SerialComm:
                 if waiting > 0:
                     data = self._serial.recv(waiting)
                     if data:
-                        self.on_rx_char(data)
+                        self._buffer.extend(data)
+                        if 0xFF in self._buffer:
+                            self.on_rx_char(bytes(self._buffer))
+                            self._buffer.clear()
                 else:
                     time.sleep(0.01)
             except serial.SerialException as exc:

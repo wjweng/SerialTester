@@ -1,0 +1,230 @@
+<ui version="4.0">
+ <class>MainTab</class>
+ <widget class="QWidget" name="MainTab">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupPanTilt">
+     <property name="title">
+      <string>Pan/Tilt Control</string>
+     </property>
+     <layout class="QVBoxLayout" name="layoutPanTilt">
+      <item>
+       <widget class="QGroupBox" name="groupMove">
+        <property name="title">
+         <string>Continuous Move</string>
+        </property>
+        <layout class="QGridLayout" name="gridMove">
+         <item row="0" column="0">
+          <widget class="QLabel" name="labelTarget">
+           <property name="text">
+            <string>Target Number</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="spinTarget"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="labelDome">
+           <property name="text">
+            <string>Dome ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QSpinBox" name="spinDome"/>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel" name="labelFunction">
+           <property name="text">
+            <string>Function Number</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QSpinBox" name="spinFunction"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="labelAlarmNumber">
+           <property name="text">
+            <string>Alarm Number</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="comboAlarmNumber"/>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="labelAlarmType">
+           <property name="text">
+            <string>AlarmType</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QComboBox" name="comboAlarmType"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="btnSetDefault">
+           <property name="text">
+            <string>Set Default</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QPushButton" name="btnSetMove">
+           <property name="text">
+            <string>Set</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="4">
+          <widget class="QPushButton" name="btnClearMove">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupRelative">
+        <property name="title">
+         <string>Relative Move</string>
+        </property>
+        <layout class="QGridLayout" name="gridRelative">
+         <item row="0" column="1">
+          <widget class="QPushButton" name="btnRelUp">
+           <property name="text">
+            <string>Up</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="btnRelLeft">
+           <property name="text">
+            <string>Left</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="btnRelStop">
+           <property name="text">
+            <string>Stop</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="btnRelRight">
+           <property name="text">
+            <string>Right</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QPushButton" name="btnRelDown">
+           <property name="text">
+            <string>Down</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QLabel" name="labelRelStep">
+           <property name="text">
+            <string>Step</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QLineEdit" name="editRelStep"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupAbsolute">
+        <property name="title">
+         <string>Absolute Move</string>
+        </property>
+        <layout class="QGridLayout" name="gridAbsolute">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="btnABS">
+           <property name="text">
+            <string>ABS</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="editABSPos"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="btnABS2">
+           <property name="text">
+            <string>ABS2</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="editABS2Pos"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="btnABSAngle">
+           <property name="text">
+            <string>Angle</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="editABSAngle"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnHome">
+        <property name="text">
+         <string>Home</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="layoutChart">
+     <item>
+      <widget class="QtCharts.QChartView" name="chartSpeed"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="layoutChartButtons">
+       <item>
+        <widget class="QPushButton" name="btnShowSpeed">
+         <property name="text">
+          <string>Show Speed</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnStopSpeed">
+         <property name="text">
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnClearChart">
+         <property name="text">
+          <string>Clear Chart</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

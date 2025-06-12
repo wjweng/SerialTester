@@ -55,7 +55,7 @@ class Ui_SerialWidget(object):
             'btnABSStop', 'btnPanType', 'comboPanMethod', 'btnABSAngleStop',
             'editABSPos', 'editABS2Pos', 'editABSAngle', 'editABSAngle2',
             'btnRelUp', 'btnRelDown', 'btnRelLeft', 'btnRelRight', 'btnRelStop',
-            'editRelStep', 'btnHome',
+            'editRelStep', 'btnStallCaliOn', 'btnStallCaliOff', 'btnHome',
             'chartSpeed', 'btnShowSpeed', 'btnStopSpeed', 'btnClearChart']:
             setattr(self, name, getattr(self.tabMainUi, name))
         self.tabWidget.addTab(self.tabMain, "")

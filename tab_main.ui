@@ -214,13 +214,36 @@
           <widget class="QLineEdit" name="editRelStep"/>
          </item>
         </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnHome">
-        <property name="text">
-         <string>Home</string>
-        </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupStall">
+       <property name="title">
+        <string>Stall Cali.</string>
+       </property>
+       <layout class="QHBoxLayout" name="layoutStall">
+        <item>
+         <widget class="QPushButton" name="btnStallCaliOn">
+          <property name="text">
+           <string>On</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStallCaliOff">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnHome">
+       <property name="text">
+        <string>Home</string>
+       </property>
        </widget>
       </item>
      </layout>

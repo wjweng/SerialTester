@@ -70,6 +70,7 @@ class SerialWindow(QtWidgets.QWidget):
         self.config_data.load(CONFIG_FILE)
         self.comm = None
         self.connected = False
+        self.pending_cmd = None
 
         self.data_received.connect(self.handle_rx)
 
@@ -129,6 +130,7 @@ class SerialWindow(QtWidgets.QWidget):
             self.config_data.port_name = self.ui.comboPort.currentText()
             self.comm = SerialComm(config=self.config_data, on_rx_char=self.on_rx)
             self.comm.open()
+            self.pending_cmd = 'version'
             self.send_command(VERSION_CMD)
             self.ui.btnOnline.setText("OffLine")
             self.connected = True
@@ -298,6 +300,7 @@ class SerialWindow(QtWidgets.QWidget):
         self.send_command(cmd)
 
     def get_pan_type(self):
+        self.pending_cmd = 'pan_type'
         cmd = bytes([0x81, 0xD9, 0x06, 0x02, 0xFF])
         self.send_command(cmd)
 
@@ -322,12 +325,18 @@ class SerialWindow(QtWidgets.QWidget):
         if 0xFF in data:
             idx = data.index(0xFF)
             packet = data[:idx+1]
-            if len(packet) >= 8:
+            if self.pending_cmd == 'pan_type' and len(packet) >= 3:
+                value = packet[2] & 0x03
+                if value < self.ui.comboPanMethod.count():
+                    self.ui.comboPanMethod.setCurrentIndex(value)
+                self.pending_cmd = None
+            elif self.pending_cmd == 'version' and len(packet) >= 8:
                 p5 = f"0{packet[5]}" if packet[5] < 10 else str(packet[5])
                 p6 = f"0{packet[6]}" if packet[6] < 10 else str(packet[6])
                 p7 = f"0{packet[7]}" if packet[7] < 10 else str(packet[7])
                 ver = f"{2000 + packet[4]}{p5}{p6}-{p7}"
                 self.ui.labelFwValue.setText(ver)
+                self.pending_cmd = None
 
         # Split data into packets at 0xFF and format each packet
         packets = []

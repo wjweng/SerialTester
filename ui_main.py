@@ -364,6 +364,7 @@ class SerialWindow(QtWidgets.QWidget):
         cmd = bytes([0x81, 0xD1, 0x06, 0x05, 0x03, 0xFF])
         self.send_command(cmd)
 
+<<<<<<< ael5f8-codex/implement-callback-for-get-pan-type-button
     def update_mcu_display(self, idx: int):
         if idx == 0:
             self.ui.labelMCUType.setText("Pan")
@@ -374,6 +375,8 @@ class SerialWindow(QtWidgets.QWidget):
         self.pending_cmd = 'mcu_type'
         self.send_command(MCU_TYPE_CMD)
 
+=======
+>>>>>>> main
     def get_pan_type(self):
         self.pending_cmd = 'pan_type'
         cmd = bytes([0x81, 0xD9, 0x06, 0x02, 0xFF])
@@ -412,6 +415,7 @@ class SerialWindow(QtWidgets.QWidget):
                 ver = f"{2000 + packet[4]}{p5}{p6}-{p7}"
                 self.ui.labelFwValue.setText(ver)
                 self.pending_cmd = None
+<<<<<<< ael5f8-codex/implement-callback-for-get-pan-type-button
                 self.get_mcu_type()
             elif self.pending_cmd == 'mcu_type' and len(packet) >= 3:
                 idx_val = packet[2] & 0x01
@@ -419,6 +423,8 @@ class SerialWindow(QtWidgets.QWidget):
                     self.ui.comboPTType.setCurrentIndex(idx_val)
                 self.update_mcu_display(idx_val)
                 self.pending_cmd = None
+=======
+>>>>>>> main
 
         # Split data into packets at 0xFF and format each packet
         packets = []

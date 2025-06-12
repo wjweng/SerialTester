@@ -89,7 +89,7 @@ class SerialComm:
                     data = self._serial.recv(waiting)
                     if data:
                         self._buffer.extend(data)
-                        if 0xFF in self._buffer:
+                        if self._buffer[-1] == 0xFF:  # Check for end of message
                             self.on_rx_char(bytes(self._buffer))
                             self._buffer.clear()
                 else:

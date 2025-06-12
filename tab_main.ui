@@ -85,6 +85,13 @@
          <item row="0" column="1">
           <widget class="QLineEdit" name="editABSPos"/>
          </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="btnABSStop">
+           <property name="text">
+            <string>ABS Stop</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QPushButton" name="btnABS2">
            <property name="text">
@@ -94,6 +101,41 @@
          </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="editABS2Pos"/>
+         </item>
+         <item row="1" column="2" rowspan="2">
+          <widget class="QGroupBox" name="groupPanType">
+           <property name="title">
+            <string>Pan Direction</string>
+           </property>
+           <layout class="QVBoxLayout" name="layoutPanType">
+            <item>
+             <widget class="QPushButton" name="btnPanType">
+              <property name="text">
+               <string>Get Pan Type</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboPanMethod">
+              <item>
+               <property name="text">
+                <string>Shorter Path</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Forced CW</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Forced CCW</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QPushButton" name="btnABSAngle">
@@ -115,44 +157,7 @@
          <item row="3" column="1">
           <widget class="QLineEdit" name="editABSAngle2"/>
          </item>
-         <item row="4" column="0" colspan="2">
-          <widget class="QPushButton" name="btnABSStop">
-           <property name="text">
-            <string>ABS Stop</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0" colspan="2">
-          <layout class="QHBoxLayout" name="layoutPanType">
-           <item>
-            <widget class="QPushButton" name="btnPanType">
-             <property name="text">
-              <string>Get Pan Type</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboPanMethod">
-             <item>
-              <property name="text">
-               <string>Shorter Path</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Forced CW</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Forced CCW</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="6" column="0" colspan="2">
+         <item row="3" column="2">
           <widget class="QPushButton" name="btnABSAngleStop">
            <property name="text">
             <string>ABS Angle Stop</string>

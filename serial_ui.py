@@ -15,17 +15,36 @@ class Ui_SerialWidget(object):
         self.btnOnline.setObjectName("btnOnline")
         self.topLayout.addWidget(self.btnOnline)
 
-        self.labelComPort = QtWidgets.QLabel(SerialWidget)
+        self.groupComPort = QtWidgets.QGroupBox(SerialWidget)
+        self.groupComPort.setObjectName("groupComPort")
+        self.layoutComPort = QtWidgets.QHBoxLayout(self.groupComPort)
+        self.layoutComPort.setObjectName("layoutComPort")
+        self.labelComPort = QtWidgets.QLabel(self.groupComPort)
         self.labelComPort.setObjectName("labelComPort")
-        self.topLayout.addWidget(self.labelComPort)
-
-        self.comboPort = QtWidgets.QComboBox(SerialWidget)
+        self.layoutComPort.addWidget(self.labelComPort)
+        self.comboPort = QtWidgets.QComboBox(self.groupComPort)
         self.comboPort.setObjectName("comboPort")
-        self.topLayout.addWidget(self.comboPort)
-
-        self.btnConfigure = QtWidgets.QPushButton(SerialWidget)
+        self.layoutComPort.addWidget(self.comboPort)
+        self.btnConfigure = QtWidgets.QPushButton(self.groupComPort)
         self.btnConfigure.setObjectName("btnConfigure")
-        self.topLayout.addWidget(self.btnConfigure)
+        self.layoutComPort.addWidget(self.btnConfigure)
+        self.topLayout.addWidget(self.groupComPort)
+
+        self.groupMCU = QtWidgets.QGroupBox(SerialWidget)
+        self.groupMCU.setObjectName("groupMCU")
+        self.layoutMCU = QtWidgets.QHBoxLayout(self.groupMCU)
+        self.layoutMCU.setObjectName("layoutMCU")
+        self.comboPTType = QtWidgets.QComboBox(self.groupMCU)
+        self.comboPTType.setObjectName("comboPTType")
+        self.comboPTType.addItems(["Pan", "Tilt"])
+        self.layoutMCU.addWidget(self.comboPTType)
+        self.labelMCUType = QtWidgets.QLabel(self.groupMCU)
+        self.labelMCUType.setObjectName("labelMCUType")
+        self.labelMCUType.setMinimumWidth(60)
+        self.labelMCUType.setFrameShape(QtWidgets.QFrame.Panel)
+        self.labelMCUType.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.layoutMCU.addWidget(self.labelMCUType)
+        self.topLayout.addWidget(self.groupMCU)
 
         self.labelFw = QtWidgets.QLabel(SerialWidget)
         self.labelFw.setObjectName("labelFw")
@@ -55,7 +74,7 @@ class Ui_SerialWidget(object):
             'btnABSStop', 'btnPanType', 'comboPanMethod', 'btnABSAngleStop',
             'editABSPos', 'editABS2Pos', 'editABSAngle', 'editABSAngle2',
             'btnRelUp', 'btnRelDown', 'btnRelLeft', 'btnRelRight', 'btnRelStop',
-            'editRelStep', 'btnHome',
+            'editRelStep', 'btnStallCaliOn', 'btnStallCaliOff', 'btnHome',
             'chartSpeed', 'btnShowSpeed', 'btnStopSpeed', 'btnClearChart']:
             setattr(self, name, getattr(self.tabMainUi, name))
         self.tabWidget.addTab(self.tabMain, "")
@@ -163,8 +182,12 @@ class Ui_SerialWidget(object):
         _translate = QtCore.QCoreApplication.translate
         SerialWidget.setWindowTitle(_translate("SerialWidget", "Serial Tester"))
         self.btnOnline.setText(_translate("SerialWidget", "OnLine"))
-        self.labelComPort.setText(_translate("SerialWidget", "ComPort:"))
+        self.groupComPort.setTitle(_translate("SerialWidget", "ComPort"))
+        self.labelComPort.setText(_translate("SerialWidget", "Port:"))
         self.btnConfigure.setText(_translate("SerialWidget", "Configure"))
+        self.groupMCU.setTitle(_translate("SerialWidget", "MCU"))
+        self.comboPTType.setItemText(0, _translate("SerialWidget", "Pan"))
+        self.comboPTType.setItemText(1, _translate("SerialWidget", "Tilt"))
         self.labelFw.setText(_translate("SerialWidget", "FW Version:"))
         self.labelFwValue.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabMain), _translate("SerialWidget", "Main"))

@@ -9,6 +9,7 @@ from serial_ui import Ui_SerialWidget
 import binascii
 
 VERSION_CMD = bytes([0x81, 0x09, 0x00, 0x02, 0xFF])
+MCU_TYPE_CMD = bytes([0x81, 0x09, 0x00, 0x03, 0xFF])
 CONFIG_FILE = "serial_config.json"
 DEFAULT_SPEED_LEVEL = 100
 
@@ -70,6 +71,7 @@ class SerialWindow(QtWidgets.QWidget):
         self.config_data.load(CONFIG_FILE)
         self.comm = None
         self.connected = False
+        self.pending_cmd = None
 
         self.data_received.connect(self.handle_rx)
 
@@ -110,7 +112,16 @@ class SerialWindow(QtWidgets.QWidget):
         self.ui.btnABSAngleStop.clicked.connect(self.abs_angle_stop)
         self.ui.btnPanType.clicked.connect(self.get_pan_type)
         self.ui.comboPanMethod.currentIndexChanged.connect(self.set_pan_method)
+        self.ui.btnRelUp.clicked.connect(self.rel_up)
+        self.ui.btnRelDown.clicked.connect(self.rel_down)
+        self.ui.btnRelLeft.clicked.connect(self.rel_left)
+        self.ui.btnRelRight.clicked.connect(self.rel_right)
+        self.ui.btnRelStop.clicked.connect(self.rel_stop)
+        self.ui.btnStallCaliOn.clicked.connect(self.stall_cali_on)
+        self.ui.btnStallCaliOff.clicked.connect(self.stall_cali_off)
         self.ui.btnHome.clicked.connect(self.go_home)
+        self.ui.comboPTType.currentIndexChanged.connect(self.update_mcu_display)
+        self.update_mcu_display(self.ui.comboPTType.currentIndex())
 
         self.speed_timer = QtCore.QTimer(self)
         self.speed_timer.timeout.connect(self.send_speed_query)
@@ -129,6 +140,7 @@ class SerialWindow(QtWidgets.QWidget):
             self.config_data.port_name = self.ui.comboPort.currentText()
             self.comm = SerialComm(config=self.config_data, on_rx_char=self.on_rx)
             self.comm.open()
+            self.pending_cmd = 'version'
             self.send_command(VERSION_CMD)
             self.ui.btnOnline.setText("OffLine")
             self.connected = True
@@ -269,12 +281,20 @@ class SerialWindow(QtWidgets.QWidget):
         pos = int(text)
         level = self.get_speed_level()
         cmd = bytearray([0x81, 0x01, 0x06, code, 0x00, 0x00,
-                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
-        cmd[4] = level
-        cmd[6] = (pos >> 12) & 0x0F
-        cmd[7] = (pos >> 8) & 0x0F
-        cmd[8] = (pos >> 4) & 0x0F
-        cmd[9] = pos & 0x0F
+                         0x00, 0x00, 0x00, 0x00,
+                         0x00, 0x00, 0x00, 0x00, 0xFF])
+        if self.ui.labelMCUType.text() == "Tilt":
+            cmd[5] = level
+            cmd[10] = (pos >> 12) & 0x0F
+            cmd[11] = (pos >> 8) & 0x0F
+            cmd[12] = (pos >> 4) & 0x0F
+            cmd[13] = pos & 0x0F
+        else:
+            cmd[4] = level
+            cmd[6] = (pos >> 12) & 0x0F
+            cmd[7] = (pos >> 8) & 0x0F
+            cmd[8] = (pos >> 4) & 0x0F
+            cmd[9] = pos & 0x0F
         self.send_command(bytes(cmd))
 
     def abs_move(self):
@@ -297,7 +317,65 @@ class SerialWindow(QtWidgets.QWidget):
         cmd = bytes([0x81, 0x01, 0x06, 0x06, 0x00, 0x00, 0xFF])
         self.send_command(cmd)
 
+    def relative_move(self, pan_dir=None, tilt_dir=None):
+        step_text = self.ui.editRelStep.text() or "0"
+        step = int(step_text)
+        speed = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x03, 0x00, 0x00,
+                         0x00, 0x00, 0x00, 0x00, 0x00,
+                         0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
+        if pan_dir is not None:
+            cmd[4] = speed
+            cmd[6] = 0x00 if pan_dir == 'left' else 0x01
+            cmd[7] = (step >> 12) & 0x0F
+            cmd[8] = (step >> 8) & 0x0F
+            cmd[9] = (step >> 4) & 0x0F
+            cmd[10] = step & 0x0F
+        if tilt_dir is not None:
+            cmd[5] = speed
+            cmd[11] = 0x00 if tilt_dir == 'up' else 0x01
+            cmd[12] = (step >> 12) & 0x0F
+            cmd[13] = (step >> 8) & 0x0F
+            cmd[14] = (step >> 4) & 0x0F
+            cmd[15] = step & 0x0F
+        self.send_command(bytes(cmd))
+
+    def rel_left(self):
+        self.relative_move(pan_dir='left')
+
+    def rel_right(self):
+        self.relative_move(pan_dir='right')
+
+    def rel_up(self):
+        self.relative_move(tilt_dir='up')
+
+    def rel_down(self):
+        self.relative_move(tilt_dir='down')
+
+    def rel_stop(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x03, 0x00, 0x00, 0xFF])
+        self.send_command(cmd)
+
+    def stall_cali_on(self):
+        cmd = bytes([0x81, 0xD1, 0x06, 0x05, 0x02, 0xFF])
+        self.send_command(cmd)
+
+    def stall_cali_off(self):
+        cmd = bytes([0x81, 0xD1, 0x06, 0x05, 0x03, 0xFF])
+        self.send_command(cmd)
+
+    def update_mcu_display(self, idx: int):
+        if idx == 0:
+            self.ui.labelMCUType.setText("Pan")
+        else:
+            self.ui.labelMCUType.setText("Tilt")
+
+    def get_mcu_type(self):
+        self.pending_cmd = 'mcu_type'
+        self.send_command(MCU_TYPE_CMD)
+
     def get_pan_type(self):
+        self.pending_cmd = 'pan_type'
         cmd = bytes([0x81, 0xD9, 0x06, 0x02, 0xFF])
         self.send_command(cmd)
 
@@ -322,12 +400,25 @@ class SerialWindow(QtWidgets.QWidget):
         if 0xFF in data:
             idx = data.index(0xFF)
             packet = data[:idx+1]
-            if len(packet) >= 8:
+            if self.pending_cmd == 'pan_type' and len(packet) >= 3:
+                value = packet[2] & 0x03
+                if value < self.ui.comboPanMethod.count():
+                    self.ui.comboPanMethod.setCurrentIndex(value)
+                self.pending_cmd = None
+            elif self.pending_cmd == 'version' and len(packet) >= 8:
                 p5 = f"0{packet[5]}" if packet[5] < 10 else str(packet[5])
                 p6 = f"0{packet[6]}" if packet[6] < 10 else str(packet[6])
                 p7 = f"0{packet[7]}" if packet[7] < 10 else str(packet[7])
                 ver = f"{2000 + packet[4]}{p5}{p6}-{p7}"
                 self.ui.labelFwValue.setText(ver)
+                self.pending_cmd = None
+                self.get_mcu_type()
+            elif self.pending_cmd == 'mcu_type' and len(packet) >= 3:
+                idx_val = packet[2] & 0x01
+                if idx_val < self.ui.comboPTType.count():
+                    self.ui.comboPTType.setCurrentIndex(idx_val)
+                self.update_mcu_display(idx_val)
+                self.pending_cmd = None
 
         # Split data into packets at 0xFF and format each packet
         packets = []

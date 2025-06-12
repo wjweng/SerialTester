@@ -12,20 +12,68 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="labelComPort">
-       <property name="text">
-        <string>ComPort:</string>
+      <widget class="QGroupBox" name="groupComPort">
+       <property name="title">
+        <string>ComPort</string>
        </property>
+       <layout class="QHBoxLayout" name="layoutComPort">
+        <item>
+         <widget class="QLabel" name="labelComPort">
+          <property name="text">
+           <string>Port:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboPort"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnConfigure">
+          <property name="text">
+           <string>Configure</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboPort"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnConfigure">
-       <property name="text">
-        <string>Configure</string>
+      <widget class="QGroupBox" name="groupMCU">
+       <property name="title">
+        <string>MCU</string>
        </property>
+       <layout class="QHBoxLayout" name="layoutMCU">
+        <item>
+         <widget class="QComboBox" name="comboPTType">
+          <item>
+           <property name="text">
+            <string>Pan</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tilt</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelMCUType">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Panel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>

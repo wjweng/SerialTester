@@ -72,20 +72,24 @@ class Ui_MainTab(object):
         self.gridAbsolute.addWidget(self.editABSAngle2, 3, 1, 1, 1)
         self.btnABSStop = QtWidgets.QPushButton(self.groupAbsolute)
         self.btnABSStop.setObjectName("btnABSStop")
-        self.gridAbsolute.addWidget(self.btnABSStop, 4, 0, 1, 2)
-        self.layoutPanType = QtWidgets.QHBoxLayout()
+        self.gridAbsolute.addWidget(self.btnABSStop, 0, 2, 1, 1)
+
+        self.groupPanType = QtWidgets.QGroupBox(self.groupAbsolute)
+        self.groupPanType.setObjectName("groupPanType")
+        self.layoutPanType = QtWidgets.QVBoxLayout(self.groupPanType)
         self.layoutPanType.setObjectName("layoutPanType")
-        self.btnPanType = QtWidgets.QPushButton(self.groupAbsolute)
+        self.btnPanType = QtWidgets.QPushButton(self.groupPanType)
         self.btnPanType.setObjectName("btnPanType")
         self.layoutPanType.addWidget(self.btnPanType)
-        self.comboPanMethod = QtWidgets.QComboBox(self.groupAbsolute)
+        self.comboPanMethod = QtWidgets.QComboBox(self.groupPanType)
         self.comboPanMethod.setObjectName("comboPanMethod")
         self.comboPanMethod.addItems(["Shorter Path", "Forced CW", "Forced CCW"])
         self.layoutPanType.addWidget(self.comboPanMethod)
-        self.gridAbsolute.addLayout(self.layoutPanType, 5, 0, 1, 2)
+        self.gridAbsolute.addWidget(self.groupPanType, 1, 2, 2, 1)
+
         self.btnABSAngleStop = QtWidgets.QPushButton(self.groupAbsolute)
         self.btnABSAngleStop.setObjectName("btnABSAngleStop")
-        self.gridAbsolute.addWidget(self.btnABSAngleStop, 6, 0, 1, 2)
+        self.gridAbsolute.addWidget(self.btnABSAngleStop, 3, 2, 1, 1)
 
         self.layoutPanTilt.addWidget(self.groupAbsolute)
 
@@ -178,6 +182,7 @@ class Ui_MainTab(object):
         self.btnABSAngle.setText(_translate("MainTab", "Angle"))
         self.btnABSAngle2.setText(_translate("MainTab", "Angle2"))
         self.btnABSStop.setText(_translate("MainTab", "ABS Stop"))
+        self.groupPanType.setTitle(_translate("MainTab", "Pan Direction"))
         self.btnPanType.setText(_translate("MainTab", "Get Pan Type"))
         self.btnABSAngleStop.setText(_translate("MainTab", "ABS Angle Stop"))
 

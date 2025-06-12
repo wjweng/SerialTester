@@ -111,6 +111,13 @@ class SerialWindow(QtWidgets.QWidget):
         self.ui.btnABSAngleStop.clicked.connect(self.abs_angle_stop)
         self.ui.btnPanType.clicked.connect(self.get_pan_type)
         self.ui.comboPanMethod.currentIndexChanged.connect(self.set_pan_method)
+        self.ui.btnRelUp.clicked.connect(self.rel_up)
+        self.ui.btnRelDown.clicked.connect(self.rel_down)
+        self.ui.btnRelLeft.clicked.connect(self.rel_left)
+        self.ui.btnRelRight.clicked.connect(self.rel_right)
+        self.ui.btnRelStop.clicked.connect(self.rel_stop)
+        self.ui.btnStallCaliOn.clicked.connect(self.stall_cali_on)
+        self.ui.btnStallCaliOff.clicked.connect(self.stall_cali_off)
         self.ui.btnHome.clicked.connect(self.go_home)
 
         self.speed_timer = QtCore.QTimer(self)
@@ -297,6 +304,53 @@ class SerialWindow(QtWidgets.QWidget):
 
     def abs_angle_stop(self):
         cmd = bytes([0x81, 0x01, 0x06, 0x06, 0x00, 0x00, 0xFF])
+        self.send_command(cmd)
+
+    def relative_move(self, pan_dir=None, tilt_dir=None):
+        step_text = self.ui.editRelStep.text() or "0"
+        step = int(step_text)
+        speed = self.get_speed_level()
+        cmd = bytearray([0x81, 0x01, 0x06, 0x03, 0x00, 0x00,
+                         0x00, 0x00, 0x00, 0x00, 0x00,
+                         0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
+        if pan_dir is not None:
+            cmd[4] = speed
+            cmd[6] = 0x00 if pan_dir == 'left' else 0x01
+            cmd[7] = (step >> 12) & 0x0F
+            cmd[8] = (step >> 8) & 0x0F
+            cmd[9] = (step >> 4) & 0x0F
+            cmd[10] = step & 0x0F
+        if tilt_dir is not None:
+            cmd[5] = speed
+            cmd[11] = 0x00 if tilt_dir == 'up' else 0x01
+            cmd[12] = (step >> 12) & 0x0F
+            cmd[13] = (step >> 8) & 0x0F
+            cmd[14] = (step >> 4) & 0x0F
+            cmd[15] = step & 0x0F
+        self.send_command(bytes(cmd))
+
+    def rel_left(self):
+        self.relative_move(pan_dir='left')
+
+    def rel_right(self):
+        self.relative_move(pan_dir='right')
+
+    def rel_up(self):
+        self.relative_move(tilt_dir='up')
+
+    def rel_down(self):
+        self.relative_move(tilt_dir='down')
+
+    def rel_stop(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x03, 0x00, 0x00, 0xFF])
+        self.send_command(cmd)
+
+    def stall_cali_on(self):
+        cmd = bytes([0x81, 0xD1, 0x06, 0x05, 0x02, 0xFF])
+        self.send_command(cmd)
+
+    def stall_cali_off(self):
+        cmd = bytes([0x81, 0xD1, 0x06, 0x05, 0x03, 0xFF])
         self.send_command(cmd)
 
     def get_pan_type(self):

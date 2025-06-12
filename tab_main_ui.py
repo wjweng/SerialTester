@@ -117,6 +117,19 @@ class Ui_MainTab(object):
 
         self.layoutPanTilt.addWidget(self.groupRelative)
 
+        self.groupStall = QtWidgets.QGroupBox(self.groupPanTilt)
+        self.groupStall.setObjectName("groupStall")
+        self.layoutStall = QtWidgets.QHBoxLayout(self.groupStall)
+        self.layoutStall.setObjectName("layoutStall")
+        self.btnStallCaliOn = QtWidgets.QPushButton(self.groupStall)
+        self.btnStallCaliOn.setObjectName("btnStallCaliOn")
+        self.layoutStall.addWidget(self.btnStallCaliOn)
+        self.btnStallCaliOff = QtWidgets.QPushButton(self.groupStall)
+        self.btnStallCaliOff.setObjectName("btnStallCaliOff")
+        self.layoutStall.addWidget(self.btnStallCaliOff)
+
+        self.layoutPanTilt.addWidget(self.groupStall)
+
         self.btnHome = QtWidgets.QPushButton(self.groupPanTilt)
         self.btnHome.setObjectName("btnHome")
         self.layoutPanTilt.addWidget(self.btnHome)
@@ -175,6 +188,10 @@ class Ui_MainTab(object):
         self.btnRelRight.setText(_translate("MainTab", "Right"))
         self.btnRelDown.setText(_translate("MainTab", "Down"))
         self.labelRelStep.setText(_translate("MainTab", "Step"))
+
+        self.groupStall.setTitle(_translate("MainTab", "Stall Cali."))
+        self.btnStallCaliOn.setText(_translate("MainTab", "On"))
+        self.btnStallCaliOff.setText(_translate("MainTab", "Off"))
 
         self.btnHome.setText(_translate("MainTab", "Home"))
         self.btnShowSpeed.setText(_translate("MainTab", "Show Speed"))

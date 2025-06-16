@@ -138,8 +138,12 @@ class Ui_MainTab(object):
         self.btnHome.setObjectName("btnHome")
         self.layoutPanTilt.addWidget(self.btnHome)
 
+        # container for motor controls placed to the right of pan/tilt group
+        self.layoutMotorCtrl = QtWidgets.QVBoxLayout()
+        self.layoutMotorCtrl.setObjectName("layoutMotorCtrl")
+
         # Speed Control group
-        self.groupSpeedControl = QtWidgets.QGroupBox(self.groupPanTilt)
+        self.groupSpeedControl = QtWidgets.QGroupBox(MainTab)
         self.groupSpeedControl.setObjectName("groupSpeedControl")
         self.layoutSpeedControl = QtWidgets.QVBoxLayout(self.groupSpeedControl)
         self.layoutSpeedControl.setObjectName("layoutSpeedControl")
@@ -200,10 +204,10 @@ class Ui_MainTab(object):
         self.layoutSpeedFly.addWidget(self.editTargetSpeed, 1, 1, 1, 1)
         self.layoutSpeedControl.addWidget(self.groupSpeedFly)
 
-        self.layoutPanTilt.addWidget(self.groupSpeedControl)
+        self.layoutMotorCtrl.addWidget(self.groupSpeedControl)
 
         # Acceleration group
-        self.groupAcceleration = QtWidgets.QGroupBox(self.groupPanTilt)
+        self.groupAcceleration = QtWidgets.QGroupBox(MainTab)
         self.groupAcceleration.setObjectName("groupAcceleration")
         self.layoutAcceleration = QtWidgets.QGridLayout(self.groupAcceleration)
         self.layoutAcceleration.setObjectName("layoutAcceleration")
@@ -227,10 +231,10 @@ class Ui_MainTab(object):
         self.comboAccLevel.addItems(["Sharp", "Standard", "Gentle"])
         self.layoutAcceleration.addWidget(self.comboAccLevel, 1, 2, 1, 1)
 
-        self.layoutPanTilt.addWidget(self.groupAcceleration)
+        self.layoutMotorCtrl.addWidget(self.groupAcceleration)
 
         # Position group
-        self.groupPosition = QtWidgets.QGroupBox(self.groupPanTilt)
+        self.groupPosition = QtWidgets.QGroupBox(MainTab)
         self.groupPosition.setObjectName("groupPosition")
         self.layoutPosition = QtWidgets.QGridLayout(self.groupPosition)
         self.layoutPosition.setObjectName("layoutPosition")
@@ -263,10 +267,10 @@ class Ui_MainTab(object):
         self.editZCount.setReadOnly(True)
         self.layoutPosition.addWidget(self.editZCount, 1, 3, 1, 1)
 
-        self.layoutPanTilt.addWidget(self.groupPosition)
+        self.layoutMotorCtrl.addWidget(self.groupPosition)
 
         # Max Angle group
-        self.groupMaxAngle = QtWidgets.QGroupBox(self.groupPanTilt)
+        self.groupMaxAngle = QtWidgets.QGroupBox(MainTab)
         self.groupMaxAngle.setObjectName("groupMaxAngle")
         self.layoutMaxAngle = QtWidgets.QHBoxLayout(self.groupMaxAngle)
         self.layoutMaxAngle.setObjectName("layoutMaxAngle")
@@ -277,10 +281,8 @@ class Ui_MainTab(object):
         self.btnMaxAngleOff.setObjectName("btnMaxAngleOff")
         self.layoutMaxAngle.addWidget(self.btnMaxAngleOff)
 
-        self.layoutPanTilt.addWidget(self.groupMaxAngle)
-
         # Motor Type group
-        self.groupMotorType = QtWidgets.QGroupBox(self.groupPanTilt)
+        self.groupMotorType = QtWidgets.QGroupBox(MainTab)
         self.groupMotorType.setObjectName("groupMotorType")
         self.layoutMotorType = QtWidgets.QHBoxLayout(self.groupMotorType)
         self.layoutMotorType.setObjectName("layoutMotorType")
@@ -291,9 +293,14 @@ class Ui_MainTab(object):
         self.btnMotorType1p8d.setObjectName("btnMotorType1p8d")
         self.layoutMotorType.addWidget(self.btnMotorType1p8d)
 
-        self.layoutPanTilt.addWidget(self.groupMotorType)
+        self.layoutMaxMotor = QtWidgets.QHBoxLayout()
+        self.layoutMaxMotor.setObjectName("layoutMaxMotor")
+        self.layoutMaxMotor.addWidget(self.groupMaxAngle)
+        self.layoutMaxMotor.addWidget(self.groupMotorType)
+        self.layoutMotorCtrl.addLayout(self.layoutMaxMotor)
 
         self.horizontalLayout.addWidget(self.groupPanTilt)
+        self.horizontalLayout.addLayout(self.layoutMotorCtrl)
 
         self.layoutChart = QtWidgets.QVBoxLayout()
         self.layoutChart.setObjectName("layoutChart")

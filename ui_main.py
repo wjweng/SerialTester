@@ -420,6 +420,7 @@ class SerialWindow(QtWidgets.QWidget):
 
     def get_speed_by_zoom(self):
         cmd = bytes([0x81, 0x09, 0x06, 0xA2, 0xFF])
+        self.pending_cmd = 'speed_zoom'
         self.send_command(cmd)
 
     def speed_by_zoom_on(self):
@@ -448,6 +449,7 @@ class SerialWindow(QtWidgets.QWidget):
     # ---- Acceleration helpers ----
     def get_acceleration(self):
         cmd = bytes([0x81, 0xD9, 0x06, 0x01, 0xFF])
+        self.pending_cmd = 'acc_value'
         self.send_command(cmd)
 
     def set_acceleration(self):
@@ -472,18 +474,22 @@ class SerialWindow(QtWidgets.QWidget):
     # ---- Position helpers ----
     def get_position(self):
         cmd = bytes([0x81, 0x09, 0x06, 0x12, 0xFF])
+        self.pending_cmd = 'position'
         self.send_command(cmd)
 
     def get_angle(self):
         cmd = bytes([0x81, 0xD9, 0x05, 0x51, 0xFF])
+        self.pending_cmd = 'angle'
         self.send_command(cmd)
 
     def get_ab_count(self):
         cmd = bytes([0x81, 0xD9, 0x05, 0x52, 0xFF])
+        self.pending_cmd = 'ab_count'
         self.send_command(cmd)
 
     def get_z_count(self):
         cmd = bytes([0x81, 0xD9, 0x05, 0x53, 0xFF])
+        self.pending_cmd = 'z_count'
         self.send_command(cmd)
 
     # ---- Max angle ----
@@ -548,6 +554,35 @@ class SerialWindow(QtWidgets.QWidget):
                 idx_val = (packet[2] & 0x0F) - 1
                 if 0 <= idx_val < self.ui.comboAccLevel.count():
                     self.ui.comboAccLevel.setCurrentIndex(idx_val)
+                self.pending_cmd = None
+            elif self.pending_cmd == 'speed_zoom' and len(packet) >= 3:
+                value = packet[2]
+                self.ui.editSpeedByZoomRatio.setText(str(value))
+                self.pending_cmd = None
+            elif self.pending_cmd == 'acc_value' and len(packet) >= 6:
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
+                self.ui.editAcceleration.setText(str(value))
+                self.pending_cmd = None
+            elif self.pending_cmd == 'position' and len(packet) >= 6:
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
+                self.ui.editMotorPosition.setText(str(value))
+                self.pending_cmd = None
+            elif self.pending_cmd == 'angle' and len(packet) >= 6:
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
+                self.ui.editMotorAngle.setText(str(value))
+                self.pending_cmd = None
+            elif self.pending_cmd == 'ab_count' and len(packet) >= 6:
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
+                self.ui.editABCount.setText(str(value))
+                self.pending_cmd = None
+            elif self.pending_cmd == 'z_count' and len(packet) >= 6:
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
+                self.ui.editZCount.setText(str(value))
                 self.pending_cmd = None
 
         # Split data into packets at 0xFF and format each packet

@@ -75,6 +75,16 @@ class Ui_SerialWidget(object):
             'editABSPos', 'editABS2Pos', 'editABSAngle', 'editABSAngle2',
             'btnRelUp', 'btnRelDown', 'btnRelLeft', 'btnRelRight', 'btnRelStop',
             'editRelStep', 'btnStallCaliOn', 'btnStallCaliOff', 'btnHome',
+            'groupSpeedControl', 'editSpeedLevel', 'editSpeedInPPS',
+            'btnGetSpeedByZoomRatio', 'btnSpeedByZoomOn', 'btnSpeedByZoomOff',
+            'editSpeedByZoomRatio', 'btnGetCurrentSpeed', 'editCurrentSpeed',
+            'btnSetTargetSpeed', 'editTargetSpeed', 'groupAcceleration',
+            'btnGetAcceleration', 'btnSetAcceleration', 'editAcceleration',
+            'btnGetAccLevel', 'btnSetAccLevel', 'comboAccLevel',
+            'groupPosition', 'btnGetPosition', 'editMotorPosition', 'btnABCount',
+            'editABCount', 'btnGetAngle', 'editMotorAngle', 'btnZCount',
+            'editZCount', 'groupMaxAngle', 'btnMaxAngleOn', 'btnMaxAngleOff',
+            'groupMotorType', 'btnMotorType0p9d', 'btnMotorType1p8d',
             'chartSpeed', 'btnShowSpeed', 'btnStopSpeed', 'btnClearChart']:
             setattr(self, name, getattr(self.tabMainUi, name))
         self.tabWidget.addTab(self.tabMain, "")

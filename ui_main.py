@@ -546,7 +546,7 @@ class SerialWindow(QtWidgets.QWidget):
                 self.ui.editSpeedInPPS.setText(str(value))
                 self.pending_cmd = None
             elif self.pending_cmd == 'current_speed' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
                         ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
                 self.ui.editCurrentSpeed.setText(str(value))
                 self.pending_cmd = None
@@ -560,27 +560,27 @@ class SerialWindow(QtWidgets.QWidget):
                 self.ui.editSpeedByZoomRatio.setText(str(value))
                 self.pending_cmd = None
             elif self.pending_cmd == 'acc_value' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
                         ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
                 self.ui.editAcceleration.setText(str(value))
                 self.pending_cmd = None
             elif self.pending_cmd == 'position' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
                         ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
                 self.ui.editMotorPosition.setText(str(value))
                 self.pending_cmd = None
             elif self.pending_cmd == 'angle' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
                         ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
                 self.ui.editMotorAngle.setText(str(value))
                 self.pending_cmd = None
             elif self.pending_cmd == 'ab_count' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
                         ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
                 self.ui.editABCount.setText(str(value))
                 self.pending_cmd = None
             elif self.pending_cmd == 'z_count' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) |
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
                         ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
                 self.ui.editZCount.setText(str(value))
                 self.pending_cmd = None

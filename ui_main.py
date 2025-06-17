@@ -119,7 +119,14 @@ class SerialWindow(QtWidgets.QWidget):
         self.ui.btnRelStop.clicked.connect(self.rel_stop)
         self.ui.btnStallCaliOn.clicked.connect(self.stall_cali_on)
         self.ui.btnStallCaliOff.clicked.connect(self.stall_cali_off)
-        self.ui.btnHome.clicked.connect(self.go_home)
+        self.ui.btnZeroCaliPlus.clicked.connect(self.zero_cali_plus)
+        self.ui.btnZeroCaliMinus.clicked.connect(self.zero_cali_minus)
+        self.ui.btnZeroHome.clicked.connect(self.go_home)
+        self.ui.btnClearZeroCali.clicked.connect(self.clear_zero_cali)
+        self.ui.btnZeroCaliStatus.clicked.connect(self.zero_cali_status)
+        self.ui.btnLockHome.clicked.connect(self.lock_home)
+        self.ui.btnUnlockHome.clicked.connect(self.unlock_home)
+        self.ui.btnLockStatus.clicked.connect(self.lock_status)
         self.ui.editSpeedLevel.textChanged.connect(self.speed_level_changed)
         self.ui.btnGetSpeedByZoomRatio.clicked.connect(self.get_speed_by_zoom)
         self.ui.btnSpeedByZoomOn.clicked.connect(self.speed_by_zoom_on)
@@ -387,6 +394,37 @@ class SerialWindow(QtWidgets.QWidget):
         cmd = bytes([0x81, 0xD1, 0x06, 0x05, 0x03, 0xFF])
         self.send_command(cmd)
 
+    # ---- Zero-point Calibration helpers ----
+    def zero_cali_plus(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x05, 0x01, 0x00, 0xFF])
+        self.send_command(cmd)
+
+    def zero_cali_minus(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x05, 0x01, 0x02, 0xFF])
+        self.send_command(cmd)
+
+    def clear_zero_cali(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x05, 0x00, 0xFF])
+        self.send_command(cmd)
+
+    def zero_cali_status(self):
+        cmd = bytes([0x81, 0xD9, 0x05, 0x55, 0xFF])
+        self.pending_cmd = 'zp_status'
+        self.send_command(cmd)
+
+    def lock_home(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x04, 0x01, 0xFF])
+        self.send_command(cmd)
+
+    def unlock_home(self):
+        cmd = bytes([0x81, 0x01, 0x06, 0x04, 0x00, 0xFF])
+        self.send_command(cmd)
+
+    def lock_status(self):
+        cmd = bytes([0x81, 0xD9, 0x05, 0x56, 0xFF])
+        self.pending_cmd = 'lock_status'
+        self.send_command(cmd)
+
     def update_mcu_display(self, idx: int):
         if idx == 0:
             self.ui.labelMCUType.setText("Pan")
@@ -589,6 +627,14 @@ class SerialWindow(QtWidgets.QWidget):
                 value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
                         ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
                 self.ui.editZCount.setText(str(value))
+                self.pending_cmd = None
+            elif self.pending_cmd == 'zp_status' and len(packet) >= 6:
+                val = packet[5] & 0x01
+                self.ui.editZeroCali.setText('Done' if val == 1 else 'Not Done')
+                self.pending_cmd = None
+            elif self.pending_cmd == 'lock_status' and len(packet) >= 6:
+                val = packet[5] & 0x01
+                self.ui.editLockStatus.setText('Locked' if val == 1 else 'Unlocked')
                 self.pending_cmd = None
 
         # Split data into packets at 0xFF and format each packet

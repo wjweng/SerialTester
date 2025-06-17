@@ -1,4 +1,5 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtChart, QtGui
+from collections import deque
 import sys
 import serial.tools.list_ports
 
@@ -90,6 +91,7 @@ class SerialWindow(QtWidgets.QWidget):
         self.ui.btnTest8.clicked.connect(lambda: self.handle_test(8))
         self.ui.btnShowSpeed.clicked.connect(self.start_speed_timer)
         self.ui.btnStopSpeed.clicked.connect(self.stop_speed_timer)
+        self.ui.btnClearChart.clicked.connect(self.clear_speed_chart)
         self.ui.btnTiltUp.clicked.connect(self.tilt_up_clicked)
         self.ui.btnTiltUp.pressed.connect(self.tilt_up_pressed)
         self.ui.btnTiltUp.released.connect(self.tilt_released)
@@ -151,6 +153,20 @@ class SerialWindow(QtWidgets.QWidget):
         self.speed_timer = QtCore.QTimer(self)
         self.speed_timer.timeout.connect(self.send_speed_query)
 
+        # chart for motor speed
+        self.speed_series = QtChart.QLineSeries()
+        self.speed_chart = QtChart.QChart()
+        self.speed_chart.addSeries(self.speed_series)
+        self.speed_chart.createDefaultAxes()
+        self.speed_chart.legend().hide()
+        self.ui.chartSpeed.setChart(self.speed_chart)
+        self.ui.chartSpeed.setRenderHint(QtGui.QPainter.Antialiasing)
+
+        self.speed_values = deque(maxlen=200)
+        self.speed_times = deque(maxlen=200)
+        self.speed_counter = 0
+        self.await_speed = False
+
 
     def refresh_ports(self):
         ports = list_serial_ports()
@@ -198,14 +214,28 @@ class SerialWindow(QtWidgets.QWidget):
 
 
     def start_speed_timer(self):
-        self.speed_timer.start(500)
+        self.speed_timer.start(50)
 
     def stop_speed_timer(self):
         self.speed_timer.stop()
 
     def send_speed_query(self):
         cmd = bytes([0x81, 0xD9, 0x06, 0x03, 0xFF])
+        self.await_speed = True
         self.send_command(cmd)
+
+    def update_speed_chart(self):
+        self.speed_series.clear()
+        for t, v in zip(self.speed_times, self.speed_values):
+            self.speed_series.append(t, v)
+        if self.speed_times:
+            self.speed_chart.axisX().setRange(self.speed_times[0], self.speed_times[-1])
+        if self.speed_values:
+            ymin = min(self.speed_values)
+            ymax = max(self.speed_values)
+            if ymin == ymax:
+                ymax += 1
+            self.speed_chart.axisY().setRange(ymin, ymax)
 
     def get_speed_level(self) -> int:
         text = self.ui.editSpeedLevel.text()
@@ -636,6 +666,15 @@ class SerialWindow(QtWidgets.QWidget):
                 val = packet[5] & 0x01
                 self.ui.editLockStatus.setText('Locked' if val == 1 else 'Unlocked')
                 self.pending_cmd = None
+            elif self.await_speed and len(packet) >= 6:
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
+                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
+                self.ui.editCurrentSpeed.setText(str(value))
+                self.speed_values.append(value)
+                self.speed_times.append(self.speed_counter * 0.05)
+                self.speed_counter += 1
+                self.update_speed_chart()
+                self.await_speed = False
 
         # Split data into packets at 0xFF and format each packet
         packets = []
@@ -656,6 +695,12 @@ class SerialWindow(QtWidgets.QWidget):
     def clear_text(self):
         self.ui.textTx.clear()
         self.ui.textRx.clear()
+
+    def clear_speed_chart(self):
+        self.speed_series.clear()
+        self.speed_values.clear()
+        self.speed_times.clear()
+        self.speed_counter = 0
 
     def open_config(self):
         dlg = ConfigDialog(self, self.config_data)

@@ -201,7 +201,16 @@ class SerialWindow(QtWidgets.QWidget):
         self.send_command(cmd)
 
     def get_speed_level(self) -> int:
-        return DEFAULT_SPEED_LEVEL
+        text = self.ui.editSpeedLevel.text()
+        if not text:
+            level = DEFAULT_SPEED_LEVEL
+            self.ui.editSpeedLevel.setText(str(level))
+        else:
+            level = int(text)
+        if level == 0:
+            level = 1
+            self.ui.editSpeedLevel.setText(str(level))
+        return level
 
     def send_stop_command(self):
         cmd = bytes([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x03, 0xFF])

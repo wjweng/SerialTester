@@ -46,16 +46,23 @@ class Ui_SerialWidget(object):
         self.layoutMCU.addWidget(self.labelMCUType)
         self.topLayout.addWidget(self.groupMCU)
 
-        self.labelFw = QtWidgets.QLabel(SerialWidget)
-        self.labelFw.setObjectName("labelFw")
-        self.topLayout.addWidget(self.labelFw)
+        self.groupFW = QtWidgets.QGroupBox(SerialWidget)
+        self.groupFW.setObjectName("groupFW")
+        self.layoutFW = QtWidgets.QHBoxLayout(self.groupFW)
+        self.layoutFW.setObjectName("layoutFW")
 
-        self.labelFwValue = QtWidgets.QLabel(SerialWidget)
+        self.labelFw = QtWidgets.QLabel(self.groupFW)
+        self.labelFw.setObjectName("labelFw")
+        self.layoutFW.addWidget(self.labelFw)
+
+        self.labelFwValue = QtWidgets.QLabel(self.groupFW)
         self.labelFwValue.setObjectName("labelFwValue")
         self.labelFwValue.setMinimumWidth(100)
         self.labelFwValue.setFrameShape(QtWidgets.QFrame.Panel)
         self.labelFwValue.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.topLayout.addWidget(self.labelFwValue)
+        self.layoutFW.addWidget(self.labelFwValue)
+
+        self.topLayout.addWidget(self.groupFW)
 
         self.verticalLayout.addLayout(self.topLayout)
 
@@ -160,26 +167,34 @@ class Ui_SerialWidget(object):
 
         self.verticalLayout.addWidget(self.tabWidget)
 
-        self.formLayout = QtWidgets.QFormLayout()
-        self.formLayout.setObjectName("formLayout")
+        self.layoutTxRx = QtWidgets.QHBoxLayout()
+        self.layoutTxRx.setObjectName("layoutTxRx")
 
+        self.layoutTx = QtWidgets.QVBoxLayout()
+        self.layoutTx.setObjectName("layoutTx")
         self.labelTx = QtWidgets.QLabel(SerialWidget)
         self.labelTx.setObjectName("labelTx")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.labelTx)
-
+        self.layoutTx.addWidget(self.labelTx)
         self.textTx = QtWidgets.QTextEdit(SerialWidget)
         self.textTx.setObjectName("textTx")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.textTx)
+        self.textTx.setMinimumHeight(200)
+        self.layoutTx.addWidget(self.textTx)
+        self.layoutTxRx.addLayout(self.layoutTx)
 
+        self.layoutRx = QtWidgets.QVBoxLayout()
+        self.layoutRx.setObjectName("layoutRx")
         self.labelRx = QtWidgets.QLabel(SerialWidget)
         self.labelRx.setObjectName("labelRx")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.labelRx)
-
+        self.layoutRx.addWidget(self.labelRx)
         self.textRx = QtWidgets.QTextEdit(SerialWidget)
         self.textRx.setObjectName("textRx")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.textRx)
+        self.textRx.setMinimumHeight(200)
+        self.layoutRx.addWidget(self.textRx)
+        self.layoutTxRx.addLayout(self.layoutRx)
+        self.layoutTxRx.setStretch(0, 1)
+        self.layoutTxRx.setStretch(1, 1)
 
-        self.verticalLayout.addLayout(self.formLayout)
+        self.verticalLayout.addLayout(self.layoutTxRx)
 
         self.btnClear = QtWidgets.QPushButton(SerialWidget)
         self.btnClear.setObjectName("btnClear")
@@ -198,6 +213,7 @@ class Ui_SerialWidget(object):
         self.groupMCU.setTitle(_translate("SerialWidget", "MCU"))
         self.comboPTType.setItemText(0, _translate("SerialWidget", "Pan"))
         self.comboPTType.setItemText(1, _translate("SerialWidget", "Tilt"))
+        self.groupFW.setTitle(_translate("SerialWidget", "FW group"))
         self.labelFw.setText(_translate("SerialWidget", "FW Version:"))
         self.labelFwValue.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabMain), _translate("SerialWidget", "Main"))

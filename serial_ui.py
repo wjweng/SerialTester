@@ -101,7 +101,7 @@ class Ui_SerialWidget(object):
             'editABCount', 'btnGetAngle', 'editMotorAngle', 'btnZCount',
             'editZCount', 'groupMaxAngle', 'btnMaxAngleOn', 'btnMaxAngleOff',
             'groupMotorType', 'btnMotorType0p9d', 'btnMotorType1p8d',
-            'chartSpeed', 'btnShowSpeed', 'btnStopSpeed', 'btnClearChart']:
+            'groupSpeedChart', 'chartSpeed', 'btnShowSpeed', 'btnStopSpeed', 'btnClearChart']:
             setattr(self, name, getattr(self.tabMainUi, name))
         self.tabWidget.addTab(self.tabMain, "")
 
@@ -227,7 +227,8 @@ class Ui_SerialWidget(object):
         self.labelFwValue.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabMain), _translate("SerialWidget", "Main"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabTest), _translate("SerialWidget", "Test"))
-        self.btnShowSpeed.setText(_translate("SerialWidget", "Show Speed"))
+        self.groupSpeedChart.setTitle(_translate("SerialWidget", "Speed Chart"))
+        self.btnShowSpeed.setText(_translate("SerialWidget", "Start"))
         self.btnStopSpeed.setText(_translate("SerialWidget", "Stop"))
         self.groupVisca.setTitle(_translate("SerialWidget", "Test Visca Commands"))
         self.btnTest1.setText(_translate("SerialWidget", "Test 1"))

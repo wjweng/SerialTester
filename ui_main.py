@@ -537,12 +537,9 @@ class SerialWindow(QtWidgets.QWidget):
                     self.ui.comboPTType.setCurrentIndex(idx_val)
                 self.update_mcu_display(idx_val)
                 self.pending_cmd = None
-            elif self.pending_cmd == 'speed_pps' and len(packet) >= 3:
-                value = (packet[2] & 0x0F) << 8
-                if len(packet) >= 4:
-                    value |= (packet[3] & 0x0F) << 4
-                if len(packet) >= 5:
-                    value |= packet[4] & 0x0F
+            elif self.pending_cmd == 'speed_pps' and len(packet) >= 6:
+                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
+                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
                 self.ui.editSpeedInPPS.setText(str(value))
                 self.pending_cmd = None
             elif self.pending_cmd == 'current_speed' and len(packet) >= 6:

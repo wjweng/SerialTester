@@ -288,6 +288,7 @@ class Ui_MainTab(object):
         self.layoutZeroCali.addWidget(self.btnLockStatus, 0, 4, 1, 1)
         self.btnZeroHome = QtWidgets.QPushButton(self.groupZeroCali)
         self.btnZeroHome.setObjectName("btnZeroHome")
+        self.btnZeroHome.setFixedHeight(self.btnZeroHome.height() * 2)
         self.layoutZeroCali.addWidget(self.btnZeroHome, 0, 5, 2, 1)
         self.btnClearZeroCali = QtWidgets.QPushButton(self.groupZeroCali)
         self.btnClearZeroCali.setObjectName("btnClearZeroCali")

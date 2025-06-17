@@ -13,6 +13,7 @@ class Ui_SerialWidget(object):
 
         self.btnOnline = QtWidgets.QPushButton(SerialWidget)
         self.btnOnline.setObjectName("btnOnline")
+        self.btnOnline.setFixedHeight(self.btnOnline.height() * 2)
         self.topLayout.addWidget(self.btnOnline)
 
         self.groupComPort = QtWidgets.QGroupBox(SerialWidget)
@@ -21,6 +22,7 @@ class Ui_SerialWidget(object):
         self.layoutComPort.setObjectName("layoutComPort")
         self.labelComPort = QtWidgets.QLabel(self.groupComPort)
         self.labelComPort.setObjectName("labelComPort")
+        self.labelComPort.setAlignment(QtCore.Qt.AlignCenter)
         self.layoutComPort.addWidget(self.labelComPort)
         self.comboPort = QtWidgets.QComboBox(self.groupComPort)
         self.comboPort.setObjectName("comboPort")
@@ -43,6 +45,7 @@ class Ui_SerialWidget(object):
         self.labelMCUType.setMinimumWidth(60)
         self.labelMCUType.setFrameShape(QtWidgets.QFrame.Panel)
         self.labelMCUType.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.labelMCUType.setAlignment(QtCore.Qt.AlignCenter)
         self.layoutMCU.addWidget(self.labelMCUType)
         self.topLayout.addWidget(self.groupMCU)
 
@@ -53,6 +56,7 @@ class Ui_SerialWidget(object):
 
         self.labelFw = QtWidgets.QLabel(self.groupFW)
         self.labelFw.setObjectName("labelFw")
+        self.labelFw.setAlignment(QtCore.Qt.AlignCenter)
         self.layoutFW.addWidget(self.labelFw)
 
         self.labelFwValue = QtWidgets.QLabel(self.groupFW)
@@ -60,6 +64,7 @@ class Ui_SerialWidget(object):
         self.labelFwValue.setMinimumWidth(100)
         self.labelFwValue.setFrameShape(QtWidgets.QFrame.Panel)
         self.labelFwValue.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.labelFwValue.setAlignment(QtCore.Qt.AlignCenter)
         self.layoutFW.addWidget(self.labelFwValue)
 
         self.topLayout.addWidget(self.groupFW)

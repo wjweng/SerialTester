@@ -6,6 +6,9 @@ class Ui_MainTab(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(MainTab)
         self.horizontalLayout.setObjectName("horizontalLayout")
 
+        self.leftLayout = QtWidgets.QVBoxLayout()
+        self.leftLayout.setObjectName("leftLayout")
+
         self.groupPanTilt = QtWidgets.QGroupBox(MainTab)
         self.groupPanTilt.setObjectName("groupPanTilt")
         self.layoutPanTilt = QtWidgets.QVBoxLayout(self.groupPanTilt)
@@ -121,7 +124,7 @@ class Ui_MainTab(object):
 
         self.layoutPanTilt.addWidget(self.groupRelative)
 
-        self.groupStall = QtWidgets.QGroupBox(self.groupPanTilt)
+        self.groupStall = QtWidgets.QGroupBox(MainTab)
         self.groupStall.setObjectName("groupStall")
         self.layoutStall = QtWidgets.QHBoxLayout(self.groupStall)
         self.layoutStall.setObjectName("layoutStall")
@@ -131,12 +134,6 @@ class Ui_MainTab(object):
         self.btnStallCaliOff = QtWidgets.QPushButton(self.groupStall)
         self.btnStallCaliOff.setObjectName("btnStallCaliOff")
         self.layoutStall.addWidget(self.btnStallCaliOff)
-
-        self.layoutPanTilt.addWidget(self.groupStall)
-
-        self.btnHome = QtWidgets.QPushButton(self.groupPanTilt)
-        self.btnHome.setObjectName("btnHome")
-        self.layoutPanTilt.addWidget(self.btnHome)
 
         # container for motor controls placed to the right of pan/tilt group
         self.layoutMotorCtrl = QtWidgets.QVBoxLayout()
@@ -269,6 +266,46 @@ class Ui_MainTab(object):
 
         self.layoutMotorCtrl.addWidget(self.groupPosition)
 
+        # Zero-point Calibration group
+        self.groupZeroCali = QtWidgets.QGroupBox(MainTab)
+        self.groupZeroCali.setObjectName("groupZeroCali")
+        self.layoutZeroCali = QtWidgets.QGridLayout(self.groupZeroCali)
+        self.layoutZeroCali.setObjectName("layoutZeroCali")
+        self.btnZeroCaliPlus = QtWidgets.QPushButton(self.groupZeroCali)
+        self.btnZeroCaliPlus.setObjectName("btnZeroCaliPlus")
+        self.layoutZeroCali.addWidget(self.btnZeroCaliPlus, 0, 0, 1, 1)
+        self.btnZeroCaliMinus = QtWidgets.QPushButton(self.groupZeroCali)
+        self.btnZeroCaliMinus.setObjectName("btnZeroCaliMinus")
+        self.layoutZeroCali.addWidget(self.btnZeroCaliMinus, 0, 1, 1, 1)
+        self.btnZeroCaliStatus = QtWidgets.QPushButton(self.groupZeroCali)
+        self.btnZeroCaliStatus.setObjectName("btnZeroCaliStatus")
+        self.layoutZeroCali.addWidget(self.btnZeroCaliStatus, 0, 2, 1, 1)
+        self.btnLockHome = QtWidgets.QPushButton(self.groupZeroCali)
+        self.btnLockHome.setObjectName("btnLockHome")
+        self.layoutZeroCali.addWidget(self.btnLockHome, 0, 3, 1, 1)
+        self.btnLockStatus = QtWidgets.QPushButton(self.groupZeroCali)
+        self.btnLockStatus.setObjectName("btnLockStatus")
+        self.layoutZeroCali.addWidget(self.btnLockStatus, 0, 4, 1, 1)
+        self.btnZeroHome = QtWidgets.QPushButton(self.groupZeroCali)
+        self.btnZeroHome.setObjectName("btnZeroHome")
+        self.layoutZeroCali.addWidget(self.btnZeroHome, 0, 5, 1, 1)
+        self.btnClearZeroCali = QtWidgets.QPushButton(self.groupZeroCali)
+        self.btnClearZeroCali.setObjectName("btnClearZeroCali")
+        self.layoutZeroCali.addWidget(self.btnClearZeroCali, 1, 0, 1, 1)
+        self.editZeroCali = QtWidgets.QLineEdit(self.groupZeroCali)
+        self.editZeroCali.setObjectName("editZeroCali")
+        self.editZeroCali.setReadOnly(True)
+        self.layoutZeroCali.addWidget(self.editZeroCali, 1, 1, 1, 1)
+        self.btnUnlockHome = QtWidgets.QPushButton(self.groupZeroCali)
+        self.btnUnlockHome.setObjectName("btnUnlockHome")
+        self.layoutZeroCali.addWidget(self.btnUnlockHome, 1, 3, 1, 1)
+        self.editLockStatus = QtWidgets.QLineEdit(self.groupZeroCali)
+        self.editLockStatus.setObjectName("editLockStatus")
+        self.editLockStatus.setReadOnly(True)
+        self.layoutZeroCali.addWidget(self.editLockStatus, 1, 4, 1, 1)
+
+        self.layoutMotorCtrl.addWidget(self.groupZeroCali)
+
         # Max Angle group
         self.groupMaxAngle = QtWidgets.QGroupBox(MainTab)
         self.groupMaxAngle.setObjectName("groupMaxAngle")
@@ -299,7 +336,10 @@ class Ui_MainTab(object):
         self.layoutMaxMotor.addWidget(self.groupMotorType)
         self.layoutMotorCtrl.addLayout(self.layoutMaxMotor)
 
-        self.horizontalLayout.addWidget(self.groupPanTilt)
+        self.leftLayout.addWidget(self.groupPanTilt)
+        self.leftLayout.addWidget(self.groupStall)
+        self.leftLayout.addLayout(self.layoutMaxMotor)
+        self.horizontalLayout.addLayout(self.leftLayout)
         self.horizontalLayout.addLayout(self.layoutMotorCtrl)
 
         self.layoutChart = QtWidgets.QVBoxLayout()
@@ -360,7 +400,6 @@ class Ui_MainTab(object):
         self.btnStallCaliOn.setText(_translate("MainTab", "On"))
         self.btnStallCaliOff.setText(_translate("MainTab", "Off"))
 
-        self.btnHome.setText(_translate("MainTab", "Home"))
         self.groupSpeedControl.setTitle(_translate("MainTab", "Speed Control"))
         self.groupSpeedLevel.setTitle(_translate("MainTab", "Speed Lv. (1~127, default=100)"))
         self.labelSpeedLevel.setText(_translate("MainTab", "Level"))
@@ -384,6 +423,16 @@ class Ui_MainTab(object):
         self.btnABCount.setText(_translate("MainTab", "AB"))
         self.btnGetAngle.setText(_translate("MainTab", "Angle"))
         self.btnZCount.setText(_translate("MainTab", "Z"))
+
+        self.groupZeroCali.setTitle(_translate("MainTab", "Zero-point Calibration"))
+        self.btnZeroCaliPlus.setText(_translate("MainTab", "Cali+"))
+        self.btnZeroCaliMinus.setText(_translate("MainTab", "Cali-"))
+        self.btnZeroCaliStatus.setText(_translate("MainTab", "Cali. Status"))
+        self.btnLockHome.setText(_translate("MainTab", "Lock Home"))
+        self.btnLockStatus.setText(_translate("MainTab", "Lock Status"))
+        self.btnZeroHome.setText(_translate("MainTab", "Home"))
+        self.btnClearZeroCali.setText(_translate("MainTab", "Clear Cali."))
+        self.btnUnlockHome.setText(_translate("MainTab", "Unlock Home"))
 
         self.groupMaxAngle.setTitle(_translate("MainTab", "Max Angle"))
         self.btnMaxAngleOn.setText(_translate("MainTab", "On"))

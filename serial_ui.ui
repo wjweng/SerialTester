@@ -216,7 +216,7 @@
            <item>
             <widget class="QPushButton" name="btnShowSpeed">
              <property name="text">
-              <string>Show Speed</string>
+              <string>Start</string>
              </property>
             </widget>
            </item>

@@ -161,6 +161,7 @@ class SerialWindow(QtWidgets.QWidget):
         self.speed_chart.legend().hide()
         self.ui.chartSpeed.setChart(self.speed_chart)
         self.ui.chartSpeed.setRenderHint(QtGui.QPainter.Antialiasing)
+        self.ui.chartSpeed.setMinimumWidth(self.ui.groupSpeedControl.sizeHint().width())
 
         self.speed_values = deque(maxlen=200)
         self.speed_times = deque(maxlen=200)
@@ -701,6 +702,10 @@ class SerialWindow(QtWidgets.QWidget):
         self.speed_values.clear()
         self.speed_times.clear()
         self.speed_counter = 0
+        self.speed_chart.removeAllSeries()
+        self.speed_chart.addSeries(self.speed_series)
+        self.speed_chart.createDefaultAxes()
+        self.speed_chart.legend().hide()
 
     def open_config(self):
         dlg = ConfigDialog(self, self.config_data)

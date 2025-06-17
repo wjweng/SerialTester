@@ -255,36 +255,41 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="layoutChart">
-     <item>
-      <widget class="QtCharts.QChartView" name="chartSpeed"/>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="layoutChartButtons">
-       <item>
-        <widget class="QPushButton" name="btnShowSpeed">
-         <property name="text">
-          <string>Show Speed</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnStopSpeed">
-         <property name="text">
-          <string>Stop</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnClearChart">
-         <property name="text">
-          <string>Clear Chart</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+    <widget class="QGroupBox" name="groupSpeedChart">
+     <property name="title">
+      <string>Speed Chart</string>
+     </property>
+     <layout class="QVBoxLayout" name="layoutSpeedChart">
+      <item>
+       <widget class="QtCharts.QChartView" name="chartSpeed"/>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="layoutChartButtons">
+        <item>
+         <widget class="QPushButton" name="btnShowSpeed">
+          <property name="text">
+           <string>Start</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStopSpeed">
+          <property name="text">
+           <string>Stop</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnClearChart">
+          <property name="text">
+           <string>Clear Chart</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>

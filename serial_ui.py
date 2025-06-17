@@ -213,7 +213,7 @@ class Ui_SerialWidget(object):
         self.groupMCU.setTitle(_translate("SerialWidget", "MCU"))
         self.comboPTType.setItemText(0, _translate("SerialWidget", "Pan"))
         self.comboPTType.setItemText(1, _translate("SerialWidget", "Tilt"))
-        self.groupFW.setTitle(_translate("SerialWidget", "FW group"))
+        self.groupFW.setTitle(_translate("SerialWidget", "FW"))
         self.labelFw.setText(_translate("SerialWidget", "FW Version:"))
         self.labelFwValue.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabMain), _translate("SerialWidget", "Main"))

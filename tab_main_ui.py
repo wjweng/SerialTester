@@ -356,7 +356,7 @@ class Ui_MainTab(object):
         self.btnRelDown.setText(_translate("MainTab", "Down"))
         self.labelRelStep.setText(_translate("MainTab", "Step"))
 
-        self.groupStall.setTitle(_translate("MainTab", "Stall Cali."))
+        self.groupStall.setTitle(_translate("MainTab", "Stall Calibration"))
         self.btnStallCaliOn.setText(_translate("MainTab", "On"))
         self.btnStallCaliOff.setText(_translate("MainTab", "Off"))
 

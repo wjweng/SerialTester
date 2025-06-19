@@ -21,6 +21,8 @@ class PanTiltController:
         self.pending_cmd: Optional[str] = None
         self.on_result: Callable[[ParseResult], None] = lambda res: None
         self.on_raw: Callable[[bytes], None] = lambda data: None
+        # callback invoked whenever data is transmitted
+        self.on_tx: Callable[[bytes], None] = lambda data: None
 
     # --- serial management -------------------------------------------------
     def open(self) -> None:
@@ -47,6 +49,7 @@ class PanTiltController:
     def send(self, data: bytes, pending: Optional[str] = None) -> None:
         self.pending_cmd = pending
         self.comm.send(data)
+        self.on_tx(data)
 
     # --- high level commands ----------------------------------------------
     def stop(self) -> None:

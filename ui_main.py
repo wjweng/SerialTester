@@ -71,6 +71,8 @@ class SerialWindow(QtWidgets.QWidget):
         self.controller = PanTiltController(self.config_data)
         self.controller.on_result = self.handle_result
         self.controller.on_raw = lambda d: self.data_received.emit(d)
+        self.controller.on_tx = lambda d: self.ui.textTx.append(
+            ' '.join(f'{b:02X}' for b in d))
         self.connected = False
         self.pending_cmd = None
 
@@ -193,6 +195,8 @@ class SerialWindow(QtWidgets.QWidget):
             self.controller = PanTiltController(self.config_data)
             self.controller.on_result = self.handle_result
             self.controller.on_raw = lambda d: self.data_received.emit(d)
+            self.controller.on_tx = lambda d: self.ui.textTx.append(
+                ' '.join(f'{b:02X}' for b in d))
             self.controller.open()
             self.pending_cmd = 'version'
             self.controller.get_version()
@@ -358,7 +362,6 @@ class SerialWindow(QtWidgets.QWidget):
     def set_acc_level(self):
         idx = self.ui.comboAccLevel.currentIndex()
         self.controller.set_acc_level(idx)
-
 
     def handle_rx(self, data: bytes):
         # Only display incoming packets here. Parsing is handled by the controller.

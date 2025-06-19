@@ -345,6 +345,8 @@ class SerialWindow(QtWidgets.QWidget):
             level = 1
         self.controller.set_speed_level(level)
 
+    def on_rx(self, data: bytes):
+        self.data_received.emit(data)
     def speed_by_zoom_on(self):
         ratio = int(self.ui.editSpeedByZoomRatio.text() or "1")
         self.controller.speed_by_zoom_on(ratio)
@@ -360,7 +362,6 @@ class SerialWindow(QtWidgets.QWidget):
     def set_acc_level(self):
         idx = self.ui.comboAccLevel.currentIndex()
         self.controller.set_acc_level(idx)
-
 
     def handle_rx(self, data: bytes):
         # Only display incoming packets here. Parsing is handled by the controller.

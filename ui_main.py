@@ -6,6 +6,7 @@ import serial.tools.list_ports
 from serial_comm import SerialComm
 from serial_config import SerialConfig
 from serial_ui import Ui_SerialWidget
+from protocol import ProtocolParser, ParseResult
 
 import binascii
 
@@ -596,86 +597,70 @@ class SerialWindow(QtWidgets.QWidget):
     def handle_rx(self, data: bytes):
         if 0xFF in data:
             idx = data.index(0xFF)
-            packet = data[:idx+1]
-            if self.pending_cmd == 'pan_type' and len(packet) >= 3:
-                value = packet[2] & 0x03
-                if value < self.ui.comboPanMethod.count():
-                    self.ui.comboPanMethod.setCurrentIndex(value)
-                self.pending_cmd = None
-            elif self.pending_cmd == 'version' and len(packet) >= 8:
-                p5 = f"0{packet[5]}" if packet[5] < 10 else str(packet[5])
-                p6 = f"0{packet[6]}" if packet[6] < 10 else str(packet[6])
-                p7 = f"0{packet[7]}" if packet[7] < 10 else str(packet[7])
-                ver = f"{2000 + packet[4]}{p5}{p6}-{p7}"
-                self.ui.labelFwValue.setText(ver)
-                self.pending_cmd = None
-                self.get_mcu_type()
-            elif self.pending_cmd == 'mcu_type' and len(packet) >= 3:
-                idx_val = packet[2] & 0x01
-                if idx_val < self.ui.comboPTType.count():
-                    self.ui.comboPTType.setCurrentIndex(idx_val)
-                self.update_mcu_display(idx_val)
-                self.pending_cmd = None
-            elif self.pending_cmd == 'speed_pps' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
-                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
-                self.ui.editSpeedInPPS.setText(str(value))
-                self.pending_cmd = None
-            elif self.pending_cmd == 'current_speed' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
-                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
-                self.ui.editCurrentSpeed.setText(str(value))
-                self.pending_cmd = None
-            elif self.pending_cmd == 'acc_level' and len(packet) >= 3:
-                idx_val = (packet[2] & 0x0F) - 1
-                if 0 <= idx_val < self.ui.comboAccLevel.count():
-                    self.ui.comboAccLevel.setCurrentIndex(idx_val)
-                self.pending_cmd = None
-            elif self.pending_cmd == 'speed_zoom' and len(packet) >= 3:
-                value = packet[2]
-                self.ui.editSpeedByZoomRatio.setText(str(value))
-                self.pending_cmd = None
-            elif self.pending_cmd == 'acc_value' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
-                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
-                self.ui.editAcceleration.setText(str(value))
-                self.pending_cmd = None
-            elif self.pending_cmd == 'position' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
-                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
-                self.ui.editMotorPosition.setText(str(value))
-                self.pending_cmd = None
-            elif self.pending_cmd == 'angle' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
-                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
-                self.ui.editMotorAngle.setText(str(value))
-                self.pending_cmd = None
-            elif self.pending_cmd == 'ab_count' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
-                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
-                self.ui.editABCount.setText(str(value))
-                self.pending_cmd = None
-            elif self.pending_cmd == 'z_count' and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
-                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
-                self.ui.editZCount.setText(str(value))
-                self.pending_cmd = None
-            elif self.pending_cmd == 'zp_status' and len(packet) >= 6:
-                val = packet[5] & 0x01
-                self.ui.editZeroCali.setText('Done' if val == 1 else 'Not Done')
-                self.pending_cmd = None
-            elif self.pending_cmd == 'lock_status' and len(packet) >= 6:
-                val = packet[5] & 0x01
-                self.ui.editLockStatus.setText('Locked' if val == 1 else 'Unlocked')
-                self.pending_cmd = None
-            elif self.await_speed and len(packet) >= 6:
-                value = ((packet[2] & 0x0F) << 12) | ((packet[3] & 0x0F) << 8) | \
-                        ((packet[4] & 0x0F) << 4) | (packet[5] & 0x0F)
-                self.ui.editCurrentSpeed.setText(str(value))
-                self.speed_values.append(value)
-                self.speed_times.append(self.speed_counter * 0.05)
-                self.speed_counter += 1
-                self.update_speed_chart()
+            packet = data[:idx + 1]
+            result = ProtocolParser.parse(packet, self.pending_cmd)
+            if result:
+                if result.type == 'pan_type':
+                    value = result.value
+                    if value < self.ui.comboPanMethod.count():
+                        self.ui.comboPanMethod.setCurrentIndex(value)
+                    self.pending_cmd = None
+                elif result.type == 'version':
+                    self.ui.labelFwValue.setText(result.value)
+                    self.pending_cmd = None
+                    self.get_mcu_type()
+                elif result.type == 'mcu_type':
+                    idx_val = result.value
+                    if idx_val < self.ui.comboPTType.count():
+                        self.ui.comboPTType.setCurrentIndex(idx_val)
+                    self.update_mcu_display(idx_val)
+                    self.pending_cmd = None
+                elif result.type == 'speed_pps':
+                    self.ui.editSpeedInPPS.setText(str(result.value))
+                    self.pending_cmd = None
+                elif result.type == 'current_speed':
+                    self.ui.editCurrentSpeed.setText(str(result.value))
+                    self.pending_cmd = None
+                elif result.type == 'acc_level':
+                    idx_val = result.value
+                    if 0 <= idx_val < self.ui.comboAccLevel.count():
+                        self.ui.comboAccLevel.setCurrentIndex(idx_val)
+                    self.pending_cmd = None
+                elif result.type == 'speed_zoom':
+                    self.ui.editSpeedByZoomRatio.setText(str(result.value))
+                    self.pending_cmd = None
+                elif result.type == 'acc_value':
+                    self.ui.editAcceleration.setText(str(result.value))
+                    self.pending_cmd = None
+                elif result.type == 'position':
+                    self.ui.editMotorPosition.setText(str(result.value))
+                    self.pending_cmd = None
+                elif result.type == 'angle':
+                    self.ui.editMotorAngle.setText(str(result.value))
+                    self.pending_cmd = None
+                elif result.type == 'ab_count':
+                    self.ui.editABCount.setText(str(result.value))
+                    self.pending_cmd = None
+                elif result.type == 'z_count':
+                    self.ui.editZCount.setText(str(result.value))
+                    self.pending_cmd = None
+                elif result.type == 'zp_status':
+                    val = result.value
+                    self.ui.editZeroCali.setText('Done' if val == 1 else 'Not Done')
+                    self.pending_cmd = None
+                elif result.type == 'lock_status':
+                    val = result.value
+                    self.ui.editLockStatus.setText('Locked' if val == 1 else 'Unlocked')
+                    self.pending_cmd = None
+            elif self.await_speed:
+                res = ProtocolParser.parse(packet, 'current_speed')
+                if res:
+                    value = res.value
+                    self.ui.editCurrentSpeed.setText(str(value))
+                    self.speed_values.append(value)
+                    self.speed_times.append(self.speed_counter * 0.05)
+                    self.speed_counter += 1
+                    self.update_speed_chart()
                 self.await_speed = False
 
         # Split data into packets at 0xFF and format each packet

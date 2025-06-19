@@ -71,6 +71,8 @@ class SerialWindow(QtWidgets.QWidget):
         self.controller = PanTiltController(self.config_data)
         self.controller.on_result = self.handle_result
         self.controller.on_raw = lambda d: self.data_received.emit(d)
+        self.controller.on_tx = lambda d: self.ui.textTx.append(
+            ' '.join(f'{b:02X}' for b in d))
         self.connected = False
         self.pending_cmd = None
 
@@ -193,6 +195,8 @@ class SerialWindow(QtWidgets.QWidget):
             self.controller = PanTiltController(self.config_data)
             self.controller.on_result = self.handle_result
             self.controller.on_raw = lambda d: self.data_received.emit(d)
+            self.controller.on_tx = lambda d: self.ui.textTx.append(
+                ' '.join(f'{b:02X}' for b in d))
             self.controller.open()
             self.pending_cmd = 'version'
             self.controller.get_version()
@@ -341,8 +345,6 @@ class SerialWindow(QtWidgets.QWidget):
             level = 1
         self.controller.set_speed_level(level)
 
-    def on_rx(self, data: bytes):
-        self.data_received.emit(data)
     def speed_by_zoom_on(self):
         ratio = int(self.ui.editSpeedByZoomRatio.text() or "1")
         self.controller.speed_by_zoom_on(ratio)

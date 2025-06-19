@@ -52,25 +52,36 @@ class PanTiltController:
         self.on_tx(data)
 
     # --- high level commands ----------------------------------------------
-    def stop(self) -> None:
-        cmd = bytes([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x03, 0xFF])
+    def abs_stop(self) -> None:
+        cmd = bytes([0x81, 0x01, 0x06, 0x02, 0x00, 0x00, 0xFF])
         self.send(cmd)
 
-    def abs_move(self, position: int, speed: int) -> None:
+    def abs_angle_stop(self) -> None:
+        cmd = bytes([0x81, 0x01, 0x06, 0x06, 0x00, 0x00, 0xFF])
+        self.send(cmd)
+
+    def abs_move(self, type: str, position: int, speed: int) -> None:
         """Move to absolute *position* at *speed*."""
         cmd = bytearray([0x81, 0x01, 0x06, 0x02, 0, 0,
                          0, 0, 0, 0, 0, 0, 0, 0, 0xFF])
-        cmd[4] = speed
-        cmd[6] = (position >> 12) & 0x0F
-        cmd[7] = (position >> 8) & 0x0F
-        cmd[8] = (position >> 4) & 0x0F
-        cmd[9] = position & 0x0F
+        if type == "pan":
+            cmd[4] = speed
+            cmd[6] = (position >> 12) & 0x0F
+            cmd[7] = (position >> 8) & 0x0F
+            cmd[8] = (position >> 4) & 0x0F
+            cmd[9] = position & 0x0F
+        elif type == "tilt":
+            cmd[5] = speed
+            cmd[10] = (position >> 12) & 0x0F
+            cmd[11] = (position >> 8) & 0x0F
+            cmd[12] = (position >> 4) & 0x0F
+            cmd[13] = position & 0x0F
         self.send(bytes(cmd))
 
     def rel_move(self, direction: str, step: int, speed: int) -> None:
         """Move relatively in *direction* by *step*."""
         cmd = bytearray([0x81, 0x01, 0x06, 0x03, 0, 0,
-                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0xFF])
+                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xFF])
         if direction in ("left", "right"):
             cmd[4] = speed
             cmd[6] = 0x00 if direction == "left" else 0x01
@@ -91,7 +102,6 @@ class PanTiltController:
         cmd = bytes([0x81, 0xD9, 0x06, 0x03, 0xFF])
         self.send(cmd, pending="current_speed")
 
-    # ----- additional command helpers -------------------------------------
     def get_version(self) -> None:
         """Query firmware version."""
         cmd = bytes([0x81, 0x09, 0x00, 0x02, 0xFF])
@@ -128,6 +138,10 @@ class PanTiltController:
         cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x02, 0x03, 0xFF])
         cmd[4] = speed
         self.send(bytes(cmd))
+
+    def stop(self) -> None:
+        cmd = bytes([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x03, 0xFF])
+        self.send(cmd)
 
     def stop_at(self, position: int) -> None:
         cmd = bytearray([

@@ -111,15 +111,15 @@ class SerialWindow(QtWidgets.QWidget):
         self.ui.btnPanStop.clicked.connect(self.controller.stop)
         self.ui.btnStopAt.clicked.connect(self.stop_at)
         self.ui.btnABS.clicked.connect(lambda: self.controller.abs_move(
-            int(self.ui.editABSPos.text() or "0"), self.get_speed_level()))
+            self.ui.labelMCUType.text(), int(self.ui.editABSPos.text() or "0"), self.get_speed_level()))
         self.ui.btnABS2.clicked.connect(lambda: self.controller.abs_move(
-            int(self.ui.editABS2Pos.text() or "0"), self.get_speed_level()))
+            self.ui.labelMCUType.text(), int(self.ui.editABS2Pos.text() or "0"), self.get_speed_level()))
         self.ui.btnABSAngle.clicked.connect(lambda: self.controller.abs_move(
-            int(self.ui.editABSAngle.text() or "0"), self.get_speed_level()))
+            self.ui.labelMCUType.text(), int(self.ui.editABSAngle.text() or "0"), self.get_speed_level()))
         self.ui.btnABSAngle2.clicked.connect(lambda: self.controller.abs_move(
-            int(self.ui.editABSAngle2.text() or "0"), self.get_speed_level()))
-        self.ui.btnABSStop.clicked.connect(self.controller.stop)
-        self.ui.btnABSAngleStop.clicked.connect(self.controller.stop)
+            self.ui.labelMCUType.text(), int(self.ui.editABSAngle2.text() or "0"), self.get_speed_level()))
+        self.ui.btnABSStop.clicked.connect(self.controller.abs_stop)
+        self.ui.btnABSAngleStop.clicked.connect(self.controller.abs_angle_stop)
         self.ui.btnPanType.clicked.connect(self.controller.get_pan_type)
         self.ui.comboPanMethod.currentIndexChanged.connect(self.set_pan_method)
         self.ui.btnRelUp.clicked.connect(lambda: self.controller.rel_move(

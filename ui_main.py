@@ -3,15 +3,12 @@ from collections import deque
 import sys
 import serial.tools.list_ports
 
-from serial_comm import SerialComm
 from serial_config import SerialConfig
 from serial_ui import Ui_SerialWidget
-from protocol import ProtocolParser, ParseResult
+from protocol import ParseResult
+from pan_tilt_controller import PanTiltController
 
-import binascii
 
-VERSION_CMD = bytes([0x81, 0x09, 0x00, 0x02, 0xFF])
-MCU_TYPE_CMD = bytes([0x81, 0x09, 0x00, 0x03, 0xFF])
 CONFIG_FILE = "serial_config.json"
 DEFAULT_SPEED_LEVEL = 100
 
@@ -63,6 +60,7 @@ class ConfigDialog(QtWidgets.QDialog):
 
 class SerialWindow(QtWidgets.QWidget):
     data_received = QtCore.pyqtSignal(bytes)
+    result_received = QtCore.pyqtSignal(object)
 
     def __init__(self):
         super().__init__()
@@ -71,11 +69,16 @@ class SerialWindow(QtWidgets.QWidget):
 
         self.config_data = SerialConfig()
         self.config_data.load(CONFIG_FILE)
-        self.comm = None
+        self.controller = PanTiltController(self.config_data)
+        self.controller.on_result = lambda r: self.result_received.emit(r)
+        self.controller.on_raw = lambda d: self.data_received.emit(d)
+        self.controller.on_tx = lambda d: self.ui.textTx.append(
+            ' '.join(f'{b:02X}' for b in d))
         self.connected = False
         self.pending_cmd = None
 
         self.data_received.connect(self.handle_rx)
+        self.result_received.connect(self.handle_result)
 
         self.refresh_ports()
 
@@ -105,49 +108,57 @@ class SerialWindow(QtWidgets.QWidget):
         self.ui.btnPanRight.clicked.connect(self.pan_right_clicked)
         self.ui.btnPanRight.pressed.connect(self.pan_right_pressed)
         self.ui.btnPanRight.released.connect(self.pan_released)
-        self.ui.btnPanStop.clicked.connect(self.send_stop_command)
+        self.ui.btnPanStop.clicked.connect(self.controller.stop)
         self.ui.btnStopAt.clicked.connect(self.stop_at)
-        self.ui.btnABS.clicked.connect(self.abs_move)
-        self.ui.btnABS2.clicked.connect(self.abs_move2)
-        self.ui.btnABSAngle.clicked.connect(self.abs_angle)
-        self.ui.btnABSAngle2.clicked.connect(self.abs_angle2)
-        self.ui.btnABSStop.clicked.connect(self.abs_stop)
-        self.ui.btnABSAngleStop.clicked.connect(self.abs_angle_stop)
-        self.ui.btnPanType.clicked.connect(self.get_pan_type)
+        self.ui.btnABS.clicked.connect(lambda: self.controller.abs_move(
+            int(self.ui.editABSPos.text() or "0"), self.get_speed_level()))
+        self.ui.btnABS2.clicked.connect(lambda: self.controller.abs_move(
+            int(self.ui.editABS2Pos.text() or "0"), self.get_speed_level()))
+        self.ui.btnABSAngle.clicked.connect(lambda: self.controller.abs_move(
+            int(self.ui.editABSAngle.text() or "0"), self.get_speed_level()))
+        self.ui.btnABSAngle2.clicked.connect(lambda: self.controller.abs_move(
+            int(self.ui.editABSAngle2.text() or "0"), self.get_speed_level()))
+        self.ui.btnABSStop.clicked.connect(self.controller.stop)
+        self.ui.btnABSAngleStop.clicked.connect(self.controller.stop)
+        self.ui.btnPanType.clicked.connect(self.controller.get_pan_type)
         self.ui.comboPanMethod.currentIndexChanged.connect(self.set_pan_method)
-        self.ui.btnRelUp.clicked.connect(self.rel_up)
-        self.ui.btnRelDown.clicked.connect(self.rel_down)
-        self.ui.btnRelLeft.clicked.connect(self.rel_left)
-        self.ui.btnRelRight.clicked.connect(self.rel_right)
-        self.ui.btnRelStop.clicked.connect(self.rel_stop)
-        self.ui.btnStallCaliOn.clicked.connect(self.stall_cali_on)
-        self.ui.btnStallCaliOff.clicked.connect(self.stall_cali_off)
-        self.ui.btnZeroCaliPlus.clicked.connect(self.zero_cali_plus)
-        self.ui.btnZeroCaliMinus.clicked.connect(self.zero_cali_minus)
-        self.ui.btnZeroHome.clicked.connect(self.go_home)
-        self.ui.btnClearZeroCali.clicked.connect(self.clear_zero_cali)
-        self.ui.btnZeroCaliStatus.clicked.connect(self.zero_cali_status)
-        self.ui.btnLockHome.clicked.connect(self.lock_home)
-        self.ui.btnUnlockHome.clicked.connect(self.unlock_home)
-        self.ui.btnLockStatus.clicked.connect(self.lock_status)
+        self.ui.btnRelUp.clicked.connect(lambda: self.controller.rel_move(
+            'up', int(self.ui.editRelStep.text() or '0'), self.get_speed_level()))
+        self.ui.btnRelDown.clicked.connect(lambda: self.controller.rel_move(
+            'down', int(self.ui.editRelStep.text() or '0'), self.get_speed_level()))
+        self.ui.btnRelLeft.clicked.connect(lambda: self.controller.rel_move(
+            'left', int(self.ui.editRelStep.text() or '0'), self.get_speed_level()))
+        self.ui.btnRelRight.clicked.connect(lambda: self.controller.rel_move(
+            'right', int(self.ui.editRelStep.text() or '0'), self.get_speed_level()))
+        self.ui.btnRelStop.clicked.connect(self.controller.stop)
+        self.ui.btnStallCaliOn.clicked.connect(self.controller.stall_cali_on)
+        self.ui.btnStallCaliOff.clicked.connect(self.controller.stall_cali_off)
+        self.ui.btnZeroCaliPlus.clicked.connect(self.controller.zero_cali_plus)
+        self.ui.btnZeroCaliMinus.clicked.connect(self.controller.zero_cali_minus)
+        self.ui.btnZeroHome.clicked.connect(self.controller.go_home)
+        self.ui.btnClearZeroCali.clicked.connect(self.controller.clear_zero_cali)
+        self.ui.btnZeroCaliStatus.clicked.connect(self.controller.zero_cali_status)
+        self.ui.btnLockHome.clicked.connect(self.controller.lock_home)
+        self.ui.btnUnlockHome.clicked.connect(self.controller.unlock_home)
+        self.ui.btnLockStatus.clicked.connect(self.controller.lock_status)
         self.ui.editSpeedLevel.textChanged.connect(self.speed_level_changed)
-        self.ui.btnGetSpeedByZoomRatio.clicked.connect(self.get_speed_by_zoom)
+        self.ui.btnGetSpeedByZoomRatio.clicked.connect(self.controller.get_speed_by_zoom)
         self.ui.btnSpeedByZoomOn.clicked.connect(self.speed_by_zoom_on)
-        self.ui.btnSpeedByZoomOff.clicked.connect(self.speed_by_zoom_off)
-        self.ui.btnGetCurrentSpeed.clicked.connect(self.get_current_speed)
+        self.ui.btnSpeedByZoomOff.clicked.connect(self.controller.speed_by_zoom_off)
+        self.ui.btnGetCurrentSpeed.clicked.connect(self.controller.get_speed)
         self.ui.btnSetTargetSpeed.clicked.connect(self.set_target_speed)
-        self.ui.btnGetAcceleration.clicked.connect(self.get_acceleration)
+        self.ui.btnGetAcceleration.clicked.connect(self.controller.get_acceleration)
         self.ui.btnSetAcceleration.clicked.connect(self.set_acceleration)
-        self.ui.btnGetAccLevel.clicked.connect(self.get_acc_level)
+        self.ui.btnGetAccLevel.clicked.connect(self.controller.get_acc_level)
         self.ui.btnSetAccLevel.clicked.connect(self.set_acc_level)
-        self.ui.btnGetPosition.clicked.connect(self.get_position)
-        self.ui.btnGetAngle.clicked.connect(self.get_angle)
-        self.ui.btnABCount.clicked.connect(self.get_ab_count)
-        self.ui.btnZCount.clicked.connect(self.get_z_count)
-        self.ui.btnMaxAngleOn.clicked.connect(self.max_angle_on)
-        self.ui.btnMaxAngleOff.clicked.connect(self.max_angle_off)
-        self.ui.btnMotorType0p9d.clicked.connect(self.motor_type_0p9d)
-        self.ui.btnMotorType1p8d.clicked.connect(self.motor_type_1p8d)
+        self.ui.btnGetPosition.clicked.connect(self.controller.get_position)
+        self.ui.btnGetAngle.clicked.connect(self.controller.get_angle)
+        self.ui.btnABCount.clicked.connect(self.controller.get_ab_count)
+        self.ui.btnZCount.clicked.connect(self.controller.get_z_count)
+        self.ui.btnMaxAngleOn.clicked.connect(self.controller.max_angle_on)
+        self.ui.btnMaxAngleOff.clicked.connect(self.controller.max_angle_off)
+        self.ui.btnMotorType0p9d.clicked.connect(self.controller.motor_type_0p9d)
+        self.ui.btnMotorType1p8d.clicked.connect(self.controller.motor_type_1p8d)
         self.ui.comboPTType.currentIndexChanged.connect(self.update_mcu_display)
         self.update_mcu_display(self.ui.comboPTType.currentIndex())
 
@@ -182,23 +193,25 @@ class SerialWindow(QtWidgets.QWidget):
     def toggle_connection(self):
         if not self.connected:
             self.config_data.port_name = self.ui.comboPort.currentText()
-            self.comm = SerialComm(config=self.config_data, on_rx_char=self.on_rx)
-            self.comm.open()
+            self.controller.close()
+            self.controller = PanTiltController(self.config_data)
+            self.controller.on_result = lambda r: self.result_received.emit(r)
+            self.controller.on_raw = lambda d: self.data_received.emit(d)
+            self.controller.on_tx = lambda d: self.ui.textTx.append(
+                ' '.join(f'{b:02X}' for b in d))
+            self.controller.open()
             self.pending_cmd = 'version'
-            self.send_command(VERSION_CMD)
+            self.controller.get_version()
             self.ui.btnOnline.setText("OffLine")
             self.connected = True
         else:
-            if self.comm:
-                self.comm.close()
-                self.comm = None
+            self.controller.close()
             self.ui.btnOnline.setText("OnLine")
             self.connected = False
 
     def send_command(self, data: bytes):
-        if self.comm:
-            self.comm.send(data)
-            self.ui.textTx.append(' '.join(f'{b:02X}' for b in data))
+        self.controller.send(data, self.pending_cmd)
+        self.ui.textTx.append(' '.join(f'{b:02X}' for b in data))
 
     def parse_hex(self, text: str) -> bytes:
         text = text.strip().replace(' ', '')
@@ -223,9 +236,8 @@ class SerialWindow(QtWidgets.QWidget):
         self.speed_timer.stop()
 
     def send_speed_query(self):
-        cmd = bytes([0x81, 0xD9, 0x06, 0x03, 0xFF])
         self.await_speed = True
-        self.send_command(cmd)
+        self.controller.get_speed()
 
     def update_speed_chart(self):
         self.speed_series.clear()
@@ -252,226 +264,71 @@ class SerialWindow(QtWidgets.QWidget):
             self.ui.editSpeedLevel.setText(str(level))
         return level
 
-    def send_stop_command(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x03, 0xFF])
-        self.send_command(cmd)
-
     def tilt_up_clicked(self):
         if self.ui.checkMoveStop.isChecked():
             return
         level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x01, 0xFF])
-        cmd[5] = level
-        self.send_command(bytes(cmd))
+        self.controller.tilt_up(level)
 
     def tilt_up_pressed(self):
         if not self.ui.checkMoveStop.isChecked():
             return
         level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x01, 0xFF])
-        cmd[5] = level
-        self.send_command(bytes(cmd))
+        self.controller.tilt_up(level)
 
     def tilt_down_clicked(self):
         if self.ui.checkMoveStop.isChecked():
             return
         level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x02, 0xFF])
-        cmd[5] = level
-        self.send_command(bytes(cmd))
+        self.controller.tilt_down(level)
 
     def tilt_down_pressed(self):
         if not self.ui.checkMoveStop.isChecked():
             return
         level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x02, 0xFF])
-        cmd[5] = level
-        self.send_command(bytes(cmd))
+        self.controller.tilt_down(level)
 
     def tilt_released(self):
         if self.ui.checkMoveStop.isChecked():
-            self.send_stop_command()
+            self.controller.stop()
 
     def pan_left_clicked(self):
         if self.ui.checkMoveStop.isChecked():
             return
         level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x01, 0x03, 0xFF])
-        cmd[4] = level
-        self.send_command(bytes(cmd))
+        self.controller.pan_left(level)
 
     def pan_left_pressed(self):
         if not self.ui.checkMoveStop.isChecked():
             return
         level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x01, 0x03, 0xFF])
-        cmd[4] = level
-        self.send_command(bytes(cmd))
+        self.controller.pan_left(level)
 
     def pan_right_clicked(self):
         if self.ui.checkMoveStop.isChecked():
             return
         level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x02, 0x03, 0xFF])
-        cmd[4] = level
-        self.send_command(bytes(cmd))
+        self.controller.pan_right(level)
 
     def pan_right_pressed(self):
         if not self.ui.checkMoveStop.isChecked():
             return
         level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x02, 0x03, 0xFF])
-        cmd[4] = level
-        self.send_command(bytes(cmd))
+        self.controller.pan_right(level)
 
     def pan_released(self):
         if self.ui.checkMoveStop.isChecked():
-            self.send_stop_command()
+            self.controller.stop()
 
     def stop_at(self):
         text = self.ui.editStopAt.text() or "0"
         pos = int(text)
-        cmd = bytearray([0x81, 0x01, 0x06, 0x01, 0x00, 0x00, 0x03, 0x03,
-                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
-        cmd[8] = (pos >> 12) & 0x0F
-        cmd[9] = (pos >> 8) & 0x0F
-        cmd[10] = (pos >> 4) & 0x0F
-        cmd[11] = pos & 0x0F
-        self.send_command(bytes(cmd))
-
-    def abs_command(self, code: int, edit: QtWidgets.QLineEdit):
-        text = edit.text() or "0"
-        pos = int(text)
-        level = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, code, 0x00, 0x00,
-                         0x00, 0x00, 0x00, 0x00,
-                         0x00, 0x00, 0x00, 0x00, 0xFF])
-        if self.ui.labelMCUType.text() == "Tilt":
-            cmd[5] = level
-            cmd[10] = (pos >> 12) & 0x0F
-            cmd[11] = (pos >> 8) & 0x0F
-            cmd[12] = (pos >> 4) & 0x0F
-            cmd[13] = pos & 0x0F
-        else:
-            cmd[4] = level
-            cmd[6] = (pos >> 12) & 0x0F
-            cmd[7] = (pos >> 8) & 0x0F
-            cmd[8] = (pos >> 4) & 0x0F
-            cmd[9] = pos & 0x0F
-        self.send_command(bytes(cmd))
-
-    def abs_move(self):
-        self.abs_command(0x02, self.ui.editABSPos)
-
-    def abs_move2(self):
-        self.abs_command(0x02, self.ui.editABS2Pos)
-
-    def abs_angle(self):
-        self.abs_command(0x06, self.ui.editABSAngle)
-
-    def abs_angle2(self):
-        self.abs_command(0x06, self.ui.editABSAngle2)
-
-    def abs_stop(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x02, 0x00, 0x00, 0xFF])
-        self.send_command(cmd)
-
-    def abs_angle_stop(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x06, 0x00, 0x00, 0xFF])
-        self.send_command(cmd)
-
-    def relative_move(self, pan_dir=None, tilt_dir=None):
-        step_text = self.ui.editRelStep.text() or "0"
-        step = int(step_text)
-        speed = self.get_speed_level()
-        cmd = bytearray([0x81, 0x01, 0x06, 0x03, 0x00, 0x00,
-                         0x00, 0x00, 0x00, 0x00, 0x00,
-                         0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
-        if pan_dir is not None:
-            cmd[4] = speed
-            cmd[6] = 0x00 if pan_dir == 'left' else 0x01
-            cmd[7] = (step >> 12) & 0x0F
-            cmd[8] = (step >> 8) & 0x0F
-            cmd[9] = (step >> 4) & 0x0F
-            cmd[10] = step & 0x0F
-        if tilt_dir is not None:
-            cmd[5] = speed
-            cmd[11] = 0x00 if tilt_dir == 'up' else 0x01
-            cmd[12] = (step >> 12) & 0x0F
-            cmd[13] = (step >> 8) & 0x0F
-            cmd[14] = (step >> 4) & 0x0F
-            cmd[15] = step & 0x0F
-        self.send_command(bytes(cmd))
-
-    def rel_left(self):
-        self.relative_move(pan_dir='left')
-
-    def rel_right(self):
-        self.relative_move(pan_dir='right')
-
-    def rel_up(self):
-        self.relative_move(tilt_dir='up')
-
-    def rel_down(self):
-        self.relative_move(tilt_dir='down')
-
-    def rel_stop(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x03, 0x00, 0x00, 0xFF])
-        self.send_command(cmd)
-
-    def stall_cali_on(self):
-        cmd = bytes([0x81, 0xD1, 0x06, 0x05, 0x02, 0xFF])
-        self.send_command(cmd)
-
-    def stall_cali_off(self):
-        cmd = bytes([0x81, 0xD1, 0x06, 0x05, 0x03, 0xFF])
-        self.send_command(cmd)
-
-    # ---- Zero-point Calibration helpers ----
-    def zero_cali_plus(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x05, 0x01, 0x00, 0xFF])
-        self.send_command(cmd)
-
-    def zero_cali_minus(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x05, 0x01, 0x02, 0xFF])
-        self.send_command(cmd)
-
-    def clear_zero_cali(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x05, 0x00, 0xFF])
-        self.send_command(cmd)
-
-    def zero_cali_status(self):
-        cmd = bytes([0x81, 0xD9, 0x05, 0x55, 0xFF])
-        self.pending_cmd = 'zp_status'
-        self.send_command(cmd)
-
-    def lock_home(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x04, 0x01, 0xFF])
-        self.send_command(cmd)
-
-    def unlock_home(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x04, 0x00, 0xFF])
-        self.send_command(cmd)
-
-    def lock_status(self):
-        cmd = bytes([0x81, 0xD9, 0x05, 0x56, 0xFF])
-        self.pending_cmd = 'lock_status'
-        self.send_command(cmd)
-
+        self.controller.stop_at(pos)
     def update_mcu_display(self, idx: int):
         if idx == 0:
             self.ui.labelMCUType.setText("Pan")
         else:
             self.ui.labelMCUType.setText("Tilt")
-
-    def get_mcu_type(self):
-        self.pending_cmd = 'mcu_type'
-        self.send_command(MCU_TYPE_CMD)
-
-    def get_pan_type(self):
-        self.pending_cmd = 'pan_type'
-        cmd = bytes([0x81, 0xD9, 0x06, 0x02, 0xFF])
-        self.send_command(cmd)
 
     def set_pan_method(self, idx: int):
         if idx is None:
@@ -479,14 +336,8 @@ class SerialWindow(QtWidgets.QWidget):
         if idx < 0:
             idx = 0
             self.ui.comboPanMethod.setCurrentIndex(0)
-        cmd = bytes([0x81, 0xD1, 0x06, 0x02, idx & 0x0F, 0xFF])
-        self.send_command(cmd)
+        self.controller.set_pan_method(idx)
 
-    def go_home(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x04, 0xFF])
-        self.send_command(cmd)
-
-    # ---- Speed Control helpers ----
     def speed_level_changed(self):
         text = self.ui.editSpeedLevel.text()
         if not text:
@@ -494,190 +345,100 @@ class SerialWindow(QtWidgets.QWidget):
         level = int(text)
         if level < 1:
             level = 1
-        cmd = bytes([0x81, 0xD9, 0x06, 0x04, level & 0xFF, 0xFF])
-        self.pending_cmd = 'speed_pps'
-        self.send_command(cmd)
-
-    def get_speed_by_zoom(self):
-        cmd = bytes([0x81, 0x09, 0x06, 0xA2, 0xFF])
-        self.pending_cmd = 'speed_zoom'
-        self.send_command(cmd)
+        self.controller.set_speed_level(level)
 
     def speed_by_zoom_on(self):
         ratio = int(self.ui.editSpeedByZoomRatio.text() or "1")
-        cmd = bytes([0x81, 0x01, 0x06, 0xA2, 0x02, ratio & 0xFF, 0xFF])
-        self.send_command(cmd)
-
-    def speed_by_zoom_off(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0xA2, 0x03, 0xFF])
-        self.send_command(cmd)
-
-    def get_current_speed(self):
-        cmd = bytes([0x81, 0xD9, 0x06, 0x03, 0xFF])
-        self.pending_cmd = 'current_speed'
-        self.send_command(cmd)
+        self.controller.speed_by_zoom_on(ratio)
 
     def set_target_speed(self):
         val = int(self.ui.editTargetSpeed.text() or "0")
-        cmd = bytearray([0x81, 0xD1, 0x06, 0x03, 0, 0, 0, 0, 0xFF])
-        cmd[4] = (val >> 12) & 0x0F
-        cmd[5] = (val >> 8) & 0x0F
-        cmd[6] = (val >> 4) & 0x0F
-        cmd[7] = val & 0x0F
-        self.send_command(bytes(cmd))
-
-    # ---- Acceleration helpers ----
-    def get_acceleration(self):
-        cmd = bytes([0x81, 0xD9, 0x06, 0x01, 0xFF])
-        self.pending_cmd = 'acc_value'
-        self.send_command(cmd)
+        self.controller.set_target_speed(val)
 
     def set_acceleration(self):
         val = int(self.ui.editAcceleration.text() or "100")
-        cmd = bytearray([0x81, 0xD1, 0x06, 0x01, 0, 0, 0, 0, 0xFF])
-        cmd[4] = (val >> 12) & 0x0F
-        cmd[5] = (val >> 8) & 0x0F
-        cmd[6] = (val >> 4) & 0x0F
-        cmd[7] = val & 0x0F
-        self.send_command(bytes(cmd))
-
-    def get_acc_level(self):
-        cmd = bytes([0x81, 0x09, 0x06, 0x31, 0xFF])
-        self.pending_cmd = 'acc_level'
-        self.send_command(cmd)
+        self.controller.set_acceleration(val)
 
     def set_acc_level(self):
         idx = self.ui.comboAccLevel.currentIndex()
-        cmd = bytes([0x81, 0x01, 0x06, 0x31, (idx + 1) & 0x0F, 0xFF])
-        self.send_command(cmd)
+        self.controller.set_acc_level(idx)
 
-    # ---- Position helpers ----
-    def get_position(self):
-        cmd = bytes([0x81, 0x09, 0x06, 0x12, 0xFF])
-        self.pending_cmd = 'position'
-        self.send_command(cmd)
-
-    def get_angle(self):
-        cmd = bytes([0x81, 0xD9, 0x05, 0x51, 0xFF])
-        self.pending_cmd = 'angle'
-        self.send_command(cmd)
-
-    def get_ab_count(self):
-        cmd = bytes([0x81, 0xD9, 0x05, 0x52, 0xFF])
-        self.pending_cmd = 'ab_count'
-        self.send_command(cmd)
-
-    def get_z_count(self):
-        cmd = bytes([0x81, 0xD9, 0x05, 0x53, 0xFF])
-        self.pending_cmd = 'z_count'
-        self.send_command(cmd)
-
-    # ---- Max angle ----
-    def max_angle_on(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x66, 0x02, 0xFF])
-        self.send_command(cmd)
-
-    def max_angle_off(self):
-        cmd = bytes([0x81, 0x01, 0x06, 0x66, 0x03, 0xFF])
-        self.send_command(cmd)
-
-    # ---- Motor type ----
-    def motor_type_0p9d(self):
-        cmd = bytes([0x81, 0x01, 0x00, 0x03, 0x00, 0xFF])
-        self.send_command(cmd)
-
-    def motor_type_1p8d(self):
-        cmd = bytes([0x81, 0x01, 0x00, 0x03, 0x01, 0xFF])
-        self.send_command(cmd)
-
-    def on_rx(self, data: bytes):
-        """Callback from SerialComm running in background thread."""
-        self.data_received.emit(data)
 
     def handle_rx(self, data: bytes):
-        if 0xFF in data:
-            idx = data.index(0xFF)
-            packet = data[:idx + 1]
-            result = ProtocolParser.parse(packet, self.pending_cmd)
-            if result:
-                if result.type == 'pan_type':
-                    value = result.value
-                    if value < self.ui.comboPanMethod.count():
-                        self.ui.comboPanMethod.setCurrentIndex(value)
-                    self.pending_cmd = None
-                elif result.type == 'version':
-                    self.ui.labelFwValue.setText(result.value)
-                    self.pending_cmd = None
-                    self.get_mcu_type()
-                elif result.type == 'mcu_type':
-                    idx_val = result.value
-                    if idx_val < self.ui.comboPTType.count():
-                        self.ui.comboPTType.setCurrentIndex(idx_val)
-                    self.update_mcu_display(idx_val)
-                    self.pending_cmd = None
-                elif result.type == 'speed_pps':
-                    self.ui.editSpeedInPPS.setText(str(result.value))
-                    self.pending_cmd = None
-                elif result.type == 'current_speed':
-                    self.ui.editCurrentSpeed.setText(str(result.value))
-                    self.pending_cmd = None
-                elif result.type == 'acc_level':
-                    idx_val = result.value
-                    if 0 <= idx_val < self.ui.comboAccLevel.count():
-                        self.ui.comboAccLevel.setCurrentIndex(idx_val)
-                    self.pending_cmd = None
-                elif result.type == 'speed_zoom':
-                    self.ui.editSpeedByZoomRatio.setText(str(result.value))
-                    self.pending_cmd = None
-                elif result.type == 'acc_value':
-                    self.ui.editAcceleration.setText(str(result.value))
-                    self.pending_cmd = None
-                elif result.type == 'position':
-                    self.ui.editMotorPosition.setText(str(result.value))
-                    self.pending_cmd = None
-                elif result.type == 'angle':
-                    self.ui.editMotorAngle.setText(str(result.value))
-                    self.pending_cmd = None
-                elif result.type == 'ab_count':
-                    self.ui.editABCount.setText(str(result.value))
-                    self.pending_cmd = None
-                elif result.type == 'z_count':
-                    self.ui.editZCount.setText(str(result.value))
-                    self.pending_cmd = None
-                elif result.type == 'zp_status':
-                    val = result.value
-                    self.ui.editZeroCali.setText('Done' if val == 1 else 'Not Done')
-                    self.pending_cmd = None
-                elif result.type == 'lock_status':
-                    val = result.value
-                    self.ui.editLockStatus.setText('Locked' if val == 1 else 'Unlocked')
-                    self.pending_cmd = None
-            elif self.await_speed:
-                res = ProtocolParser.parse(packet, 'current_speed')
-                if res:
-                    value = res.value
-                    self.ui.editCurrentSpeed.setText(str(value))
-                    self.speed_values.append(value)
-                    self.speed_times.append(self.speed_counter * 0.05)
-                    self.speed_counter += 1
-                    self.update_speed_chart()
-                self.await_speed = False
-
-        # Split data into packets at 0xFF and format each packet
+        # Only display incoming packets here. Parsing is handled by the controller.
         packets = []
         start = 0
         for i, byte in enumerate(data):
             if byte == 0xFF:
-                packet = data[start:i+1]
+                packet = data[start:i + 1]
                 packets.append(' '.join(f'{b:02X}' for b in packet))
-                start = i+1
-        
-        # Add any remaining bytes
+                start = i + 1
+
         if start < len(data):
             packets.append(' '.join(f'{b:02X}' for b in data[start:]))
-        
-        # Join packets with newlines and append to textRx
+
         self.ui.textRx.append('\n'.join(packets))
+
+    def handle_result(self, result: ParseResult) -> None:
+        if result.type == 'pan_type':
+            value = result.value
+            if value < self.ui.comboPanMethod.count():
+                self.ui.comboPanMethod.setCurrentIndex(value)
+            self.pending_cmd = None
+        elif result.type == 'version':
+            self.ui.labelFwValue.setText(result.value)
+            self.pending_cmd = None
+            self.controller.get_mcu_type()
+        elif result.type == 'mcu_type':
+            idx_val = result.value
+            if idx_val < self.ui.comboPTType.count():
+                self.ui.comboPTType.setCurrentIndex(idx_val)
+            self.update_mcu_display(idx_val)
+            self.pending_cmd = None
+        elif result.type == 'speed_pps':
+            self.ui.editSpeedInPPS.setText(str(result.value))
+            self.pending_cmd = None
+        elif result.type == 'current_speed':
+            value = result.value
+            self.ui.editCurrentSpeed.setText(str(value))
+            self.pending_cmd = None
+            if self.await_speed:
+                self.speed_values.append(value)
+                self.speed_times.append(self.speed_counter * 0.05)
+                self.speed_counter += 1
+                self.update_speed_chart()
+                self.await_speed = False
+        elif result.type == 'acc_level':
+            idx_val = result.value
+            if 0 <= idx_val < self.ui.comboAccLevel.count():
+                self.ui.comboAccLevel.setCurrentIndex(idx_val)
+            self.pending_cmd = None
+        elif result.type == 'speed_zoom':
+            self.ui.editSpeedByZoomRatio.setText(str(result.value))
+            self.pending_cmd = None
+        elif result.type == 'acc_value':
+            self.ui.editAcceleration.setText(str(result.value))
+            self.pending_cmd = None
+        elif result.type == 'position':
+            self.ui.editMotorPosition.setText(str(result.value))
+            self.pending_cmd = None
+        elif result.type == 'angle':
+            self.ui.editMotorAngle.setText(str(result.value))
+            self.pending_cmd = None
+        elif result.type == 'ab_count':
+            self.ui.editABCount.setText(str(result.value))
+            self.pending_cmd = None
+        elif result.type == 'z_count':
+            self.ui.editZCount.setText(str(result.value))
+            self.pending_cmd = None
+        elif result.type == 'zp_status':
+            val = result.value
+            self.ui.editZeroCali.setText('Done' if val == 1 else 'Not Done')
+            self.pending_cmd = None
+        elif result.type == 'lock_status':
+            val = result.value
+            self.ui.editLockStatus.setText('Locked' if val == 1 else 'Unlocked')
+            self.pending_cmd = None
 
     def clear_text(self):
         self.ui.textTx.clear()

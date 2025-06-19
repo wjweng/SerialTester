@@ -60,6 +60,7 @@ class ConfigDialog(QtWidgets.QDialog):
 
 class SerialWindow(QtWidgets.QWidget):
     data_received = QtCore.pyqtSignal(bytes)
+    result_received = QtCore.pyqtSignal(object)
 
     def __init__(self):
         super().__init__()
@@ -69,7 +70,7 @@ class SerialWindow(QtWidgets.QWidget):
         self.config_data = SerialConfig()
         self.config_data.load(CONFIG_FILE)
         self.controller = PanTiltController(self.config_data)
-        self.controller.on_result = self.handle_result
+        self.controller.on_result = lambda r: self.result_received.emit(r)
         self.controller.on_raw = lambda d: self.data_received.emit(d)
         self.controller.on_tx = lambda d: self.ui.textTx.append(
             ' '.join(f'{b:02X}' for b in d))
@@ -77,6 +78,7 @@ class SerialWindow(QtWidgets.QWidget):
         self.pending_cmd = None
 
         self.data_received.connect(self.handle_rx)
+        self.result_received.connect(self.handle_result)
 
         self.refresh_ports()
 
@@ -193,7 +195,7 @@ class SerialWindow(QtWidgets.QWidget):
             self.config_data.port_name = self.ui.comboPort.currentText()
             self.controller.close()
             self.controller = PanTiltController(self.config_data)
-            self.controller.on_result = self.handle_result
+            self.controller.on_result = lambda r: self.result_received.emit(r)
             self.controller.on_raw = lambda d: self.data_received.emit(d)
             self.controller.on_tx = lambda d: self.ui.textTx.append(
                 ' '.join(f'{b:02X}' for b in d))

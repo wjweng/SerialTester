@@ -8,14 +8,11 @@ from serial_ui import Ui_SerialWidget
 from protocol import ParseResult
 from pan_tilt_controller import PanTiltController
 
-
 CONFIG_FILE = "serial_config.json"
 DEFAULT_SPEED_LEVEL = 100
 
-
 def list_serial_ports():
     return [p.device for p in serial.tools.list_ports.comports()]
-
 
 class ConfigDialog(QtWidgets.QDialog):
     def __init__(self, parent, config: SerialConfig):
@@ -59,7 +56,6 @@ class ConfigDialog(QtWidgets.QDialog):
 
 
 class SerialWindow(QtWidgets.QWidget):
-    data_received = QtCore.pyqtSignal(bytes)
     result_received = QtCore.pyqtSignal(object)
 
     def __init__(self):
@@ -71,14 +67,13 @@ class SerialWindow(QtWidgets.QWidget):
         self.config_data.load(CONFIG_FILE)
         self.controller = PanTiltController(self.config_data)
         self.controller.on_result = lambda r: self.result_received.emit(r)
-        self.controller.on_raw = lambda d: self.data_received.emit(d)
         self.controller.on_tx = lambda d: self.ui.textTx.append(
             ' '.join(f'{b:02X}' for b in d))
         self.connected = False
         self.pending_cmd = None
 
-        self.data_received.connect(self.handle_rx)
         self.result_received.connect(self.handle_result)
+        self.controller.data_received.connect(self.handle_rx)
 
         self.refresh_ports()
 
@@ -196,7 +191,6 @@ class SerialWindow(QtWidgets.QWidget):
             self.controller.close()
             self.controller = PanTiltController(self.config_data)
             self.controller.on_result = lambda r: self.result_received.emit(r)
-            self.controller.on_raw = lambda d: self.data_received.emit(d)
             self.controller.on_tx = lambda d: self.ui.textTx.append(
                 ' '.join(f'{b:02X}' for b in d))
             self.controller.open()
@@ -227,7 +221,6 @@ class SerialWindow(QtWidgets.QWidget):
         cmd = self.parse_hex(edit.text())
         if cmd:
             self.send_command(cmd)
-
 
     def start_speed_timer(self):
         self.speed_timer.start(50)

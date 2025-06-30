@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from PyQt5 import QtCore, QtWidgets
 from typing import Callable, Optional
 
 from serial_comm import SerialComm
@@ -10,17 +11,19 @@ from serial_config import SerialConfig
 from protocol import ProtocolParser, ParseResult
 
 
-class PanTiltController:
+class PanTiltController(QtWidgets.QWidget):
     """Wrap :class:`SerialComm` with higher level command helpers."""
+    data_received = QtCore.pyqtSignal(bytes)
 
     def __init__(self, config: Optional[SerialConfig] = None) -> None:
+        super().__init__()
         self.comm = SerialComm(config=config or SerialConfig(),
                                on_rx_char=self._on_rx)
         self.parser = ProtocolParser()
         self.buffer = bytearray()
         self.pending_cmd: Optional[str] = None
         self.on_result: Callable[[ParseResult], None] = lambda res: None
-        self.on_raw: Callable[[bytes], None] = lambda data: None
+        
         # callback invoked whenever data is transmitted
         self.on_tx: Callable[[bytes], None] = lambda data: None
 
@@ -35,7 +38,7 @@ class PanTiltController:
     def _on_rx(self, data: bytes) -> None:
         """Handle incoming data from :class:`SerialComm`."""
         # forward raw data first
-        self.on_raw(data)
+        self.data_received.emit(data)
         self.buffer.extend(data)
         while 0xFF in self.buffer:
             idx = self.buffer.index(0xFF)
@@ -64,13 +67,13 @@ class PanTiltController:
         """Move to absolute *position* at *speed*."""
         cmd = bytearray([0x81, 0x01, 0x06, 0x02, 0, 0,
                          0, 0, 0, 0, 0, 0, 0, 0, 0xFF])
-        if type == "pan":
+        if type == "Pan":
             cmd[4] = speed
             cmd[6] = (position >> 12) & 0x0F
             cmd[7] = (position >> 8) & 0x0F
             cmd[8] = (position >> 4) & 0x0F
             cmd[9] = position & 0x0F
-        elif type == "tilt":
+        elif type == "Tilt":
             cmd[5] = speed
             cmd[10] = (position >> 12) & 0x0F
             cmd[11] = (position >> 8) & 0x0F

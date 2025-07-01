@@ -7,7 +7,6 @@ from PyQt5 import QtCore, QtWidgets
 from typing import Callable, Optional
 
 from serial_comm import SerialComm
-from serial_config import SerialConfig
 from protocol import ProtocolParser, ParseResult
 
 
@@ -15,10 +14,12 @@ class PanTiltController(QtWidgets.QWidget):
     """Wrap :class:`SerialComm` with higher level command helpers."""
     data_received = QtCore.pyqtSignal(bytes)
 
-    def __init__(self, config: Optional[SerialConfig] = None) -> None:
+    def __init__(self, comm: Optional[SerialComm] = None) -> None:
         super().__init__()
-        self.comm = SerialComm(config=config or SerialConfig(),
-                               on_rx_char=self._on_rx)
+        self.comm: Optional[SerialComm] = comm
+        if self.comm is not None:
+            # ensure we get callbacks from the SerialComm instance
+            self.comm.on_rx_char = self._on_rx
         self.parser = ProtocolParser()
         self.buffer = bytearray()
         self.pending_cmd: Optional[str] = None
@@ -29,10 +30,18 @@ class PanTiltController(QtWidgets.QWidget):
 
     # --- serial management -------------------------------------------------
     def open(self) -> None:
-        self.comm.open()
+        if self.comm is not None:
+            self.comm.open()
 
     def close(self) -> None:
-        self.comm.close()
+        if self.comm is not None:
+            self.comm.close()
+
+    def set_comm(self, comm: Optional[SerialComm]) -> None:
+        """Assign a new :class:`SerialComm` instance."""
+        self.comm = comm
+        if self.comm is not None:
+            self.comm.on_rx_char = self._on_rx
 
     # --- internal helpers --------------------------------------------------
     def _on_rx(self, data: bytes) -> None:
@@ -51,8 +60,9 @@ class PanTiltController(QtWidgets.QWidget):
 
     def send(self, data: bytes, pending: Optional[str] = None) -> None:
         self.pending_cmd = pending
-        self.comm.send(data)
-        self.on_tx(data)
+        if self.comm is not None:
+            self.comm.send(data)
+            self.on_tx(data)
 
     # --- high level commands ----------------------------------------------
     def abs_stop(self) -> None:

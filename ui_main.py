@@ -6,6 +6,8 @@ import serial.tools.list_ports
 from serial_config import SerialConfig
 from serial_ui import Ui_SerialWidget
 from protocol import ParseResult
+from typing import Optional
+from serial_comm import SerialComm
 from pan_tilt_controller import PanTiltController
 
 CONFIG_FILE = "serial_config.json"
@@ -65,7 +67,9 @@ class SerialWindow(QtWidgets.QWidget):
 
         self.config_data = SerialConfig()
         self.config_data.load(CONFIG_FILE)
-        self.controller = PanTiltController(self.config_data)
+
+        self.comm: Optional[SerialComm] = None
+        self.controller = PanTiltController()
         self.controller.on_result = lambda r: self.result_received.emit(r)
         self.controller.on_tx = lambda d: self.ui.textTx.append(
             ' '.join(f'{b:02X}' for b in d))
@@ -189,10 +193,8 @@ class SerialWindow(QtWidgets.QWidget):
         if not self.connected:
             self.config_data.port_name = self.ui.comboPort.currentText()
             self.controller.close()
-            self.controller = PanTiltController(self.config_data)
-            self.controller.on_result = lambda r: self.result_received.emit(r)
-            self.controller.on_tx = lambda d: self.ui.textTx.append(
-                ' '.join(f'{b:02X}' for b in d))
+            self.comm = SerialComm(config=self.config_data)
+            self.controller.set_comm(self.comm)
             self.controller.open()
             self.pending_cmd = 'version'
             self.controller.get_version()
@@ -200,6 +202,8 @@ class SerialWindow(QtWidgets.QWidget):
             self.connected = True
         else:
             self.controller.close()
+            self.controller.set_comm(None)
+            self.comm = None
             self.ui.btnOnline.setText("OnLine")
             self.connected = False
 
